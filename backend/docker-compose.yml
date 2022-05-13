@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  react-fe:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    volumes:
+      - '../frontend:/frontend'
+    ports:
+      - 3000:3000
+    networks:
+      my-network:
+        ipv4_address: 172.18.0.2
+    stdin_open: true
+
+  api-spring:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    volumes:
+      - './api:/api'
+    networks:
+      my-network:
+        ipv4_address: 172.18.0.3
+
+networks: 
+  my-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16
