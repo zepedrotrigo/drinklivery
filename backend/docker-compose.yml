@@ -24,6 +24,35 @@ services:
       my-network:
         ipv4_address: 172.18.0.3
 
+  db:
+    image: mysql:8.0.28
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_DATABASE: drinklivery
+        MYSQL_USER: user
+        MYSQL_PASSWORD: password
+    ports:
+        - "9906:3306"
+    networks:
+      my-net:
+        ipv4_address: 172.18.0.4
+    volumes:
+      - ./db/src:/docker-entrypoint-initdb.d # import .sql files
+      - ./db/sql-db:/var/lib/mysql # save db state
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    networks:
+      my-net:
+        ipv4_address: 172.18.0.5
+
 networks: 
   my-network:
     ipam:
