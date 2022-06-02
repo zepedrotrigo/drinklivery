@@ -16,6 +16,9 @@ const NavBar = (props) => {
                 <NavLink to="/" className={({ isActive }) => { return (isActive ? active : link) }}>
                     Home
                 </NavLink>
+                <NavLink to="/riders" className={({ isActive }) => { return (isActive ? active : link) }}>
+                    Rider List
+                </NavLink>
                 <NavLink to="/add-rider" className={({ isActive }) => { return (isActive ? active : link) }}>
                     Add Rider
                 </NavLink>
