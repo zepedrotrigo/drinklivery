@@ -15,7 +15,7 @@
 	<name>drinkerly</name>
 	<description>TQS project for Spring Boot</description>
 	<properties>
-	<properties>
+
 
 		<sonar.organization>zepedrotrigo</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
