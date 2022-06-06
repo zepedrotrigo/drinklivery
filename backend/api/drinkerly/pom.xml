@@ -35,22 +35,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<settings>
-		<pluginGroups>
-			<pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
-		</pluginGroups>
-		<profiles>
-			<profile>
-				<id>sonar</id>
-				<activation>
-					<activeByDefault>true</activeByDefault>
-				</activation>
-				<properties>
-
-				</properties>
-			</profile>
-		</profiles>
-	</settings>
 
 	<build>
 		<pluginManagement>
