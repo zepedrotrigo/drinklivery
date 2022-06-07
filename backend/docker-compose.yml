@@ -36,7 +36,7 @@ services:
     ports:
         - "9906:3306"
     networks:
-      my-net:
+      my-network:
         ipv4_address: 172.18.0.4
     volumes:
       - ./db/src:/docker-entrypoint-initdb.d # import .sql files
@@ -50,7 +50,7 @@ services:
     depends_on:
       - db
     networks:
-      my-net:
+      my-network:
         ipv4_address: 172.18.0.5
 
 networks: 
