@@ -14,6 +14,11 @@
 	<name>drinkerly</name>
 	<description>TQS project for Spring Boot</description>
 	<properties>
+
+
+		<sonar.organization>zepedrotrigo</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
 		<java.version>11</java.version>
 	</properties>
 	<dependencyManagement>
@@ -165,22 +170,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<settings>
-			<pluginGroups>
-				<pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
-			</pluginGroups>
-			<profiles>
-				<profile>
-					<id>sonar</id>
-					<activation>
-						<activeByDefault>true</activeByDefault>
-					</activation>
-					<properties>
 
-					</properties>
-				</profile>
-			</profiles>
-		</settings>
 	</build>
 
 </project>
