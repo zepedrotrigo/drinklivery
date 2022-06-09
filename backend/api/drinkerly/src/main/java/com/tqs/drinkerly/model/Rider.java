@@ -14,10 +14,11 @@ public class Rider extends Person {
     private double rating;
     private String vehicleType, licensePlate;
     private int numDeliveries, numAcceptedDeliveries, numRefusedDeliveries;
+    private boolean occupied;
 
 
     public Rider(String firstName, String lastName, int age, int nif, String password, String address,
-            String phone, String email, String vehicleType, String licensePlate) {
+            String phone, String email, String vehicleType, String licensePlate, boolean occupied) {
         super(firstName, lastName, age, nif, password, address, phone, email);
         this.vehicleType = vehicleType;
         this.licensePlate = licensePlate;
@@ -25,6 +26,7 @@ public class Rider extends Person {
         this.numAcceptedDeliveries = 0;
         this.numRefusedDeliveries = 0;
         this.rating = 5.0;
+        this.occupied = False;
     }
 
 
@@ -82,6 +84,14 @@ public class Rider extends Person {
 
     public void setNumRefusedDeliveries(int numRefusedDeliveries) {
         this.numRefusedDeliveries = numRefusedDeliveries;
+    }
+
+    public boolean getOccupied(){
+        return this.occupied;
+    }
+
+    public void setOccupied(boolean occupied){
+        this.occupied = occupied;
     }
 
     @Override

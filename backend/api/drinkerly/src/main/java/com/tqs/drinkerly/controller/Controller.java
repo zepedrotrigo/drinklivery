@@ -11,11 +11,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tqs.drinkerly.service.RequestService;
+import com.tqs.drinkerly.service.ProductService;
 
 @RestController
 class Controller {
     @Autowired
     RequestService reqserv;
+
+    @Autowired
+    ProductService productService;
+
     @GetMapping("/v1/some_endpoint")
     @ResponseBody
     String getSomeEndPoint(@RequestParam(required = false) Optional<String> date) throws IOException, InterruptedException {
@@ -25,6 +30,11 @@ class Controller {
     @PostMapping("/request")
     public void postRequest( ){
 
+    }
+
+    @GetMapping("/allproducts")
+    public List<Product> getProducts(){
+        return productService.getAllProducts();
     }
     
 }

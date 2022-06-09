@@ -1,5 +1,6 @@
 package com.tqs.drinkerly.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,18 @@ public class RequestService {
 
     public void saveRequest(List<String> Products, User user ){
         List<Rider> Riders = riderService.getAllRiders();
-        Rider deliverRider = Riders.get(0);
-        Request req = new Request( deliverRider, LocalDateTime.now(), user, Products);
-        save(req);
+        Collections.shuffle(Riders);
+        for (i = 0; i < Riders.length(); i ++){
+            if (Riders.get(i).getOccupied() == True){
+                continue;
+            }
+            else {
+                Riders.set(True, Riders.get(i).getOccupied());
+                Request req = new Request( deliverRider, LocalDateTime.now(), user, Products);
+                save(req);
+            }
+        }
+        
     }
 
     public void save(Request request) {
