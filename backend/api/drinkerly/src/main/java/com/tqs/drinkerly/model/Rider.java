@@ -1,20 +1,31 @@
 package com.tqs.drinkerly.model;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Rider")
 public class Rider extends Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private double rating;
     private String vehicleType, licensePlate;
     private int numDeliveries, numAcceptedDeliveries, numRefusedDeliveries;
     private boolean occupied;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "deliverRider")
+    List<Request> requests;
 
 
     public Rider(String firstName, String lastName, int age, int nif, String password, String address,
@@ -90,7 +101,7 @@ public class Rider extends Person {
         return this.occupied;
     }
 
-    public void setOccupied(boolean occupied){
+    public void setOccupied(boolean occupied) {
         this.occupied = occupied;
     }
 

@@ -1,5 +1,6 @@
 package com.tqs.drinkerly.model;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -7,6 +8,8 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Winery")
@@ -16,9 +19,12 @@ public class Winery {
     private long id;
     private int nif;
     private String name, address, phone, email, website;
-    List<String> products;
 
-    public Winery(String name, String address, int nif, String phone, String email, String website, List<String> products) {
+    @JsonIgnore
+    @OneToMany(mappedBy = "winery")
+    List<Product> products;
+
+    public Winery(String name, String address, int nif, String phone, String email, String website, List<Product> products) {
         this.nif = nif;
         this.name = name;
         this.address = address;
@@ -76,11 +82,11 @@ public class Winery {
         this.website = website;
     }
 
-    public List<String> getProducts() {
+    public List<Product> getProducts() {
         return this.products;
     }
 
-    public void setProducts(List<String> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

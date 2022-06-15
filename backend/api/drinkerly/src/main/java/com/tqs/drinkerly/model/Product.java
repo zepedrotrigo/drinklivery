@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -18,17 +19,20 @@ enum Type {
 @Entity
 @Table(name = "Product")
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     private String name, Type, country, region, grapeVariety, description; // type can be [red, white, sparkling, rose, dessert, fortified]
     private double volume, alcoholicVolume, buyPrice, retailPrice, ratingScore, numRatings;
     private int stock;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="winery_id", referencedColumnName = "id")
     private Winery winery;
+
+    @ManyToMany(mappedBy = "productList")
+    private List<Request> requests;
 
     public Product() {
     }

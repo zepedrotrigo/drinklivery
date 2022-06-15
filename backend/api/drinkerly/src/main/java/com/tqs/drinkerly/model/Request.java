@@ -1,13 +1,16 @@
 package com.tqs.drinkerly.model;
 
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.time.LocalDateTime; 
 
@@ -19,32 +22,39 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "Rider", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="rider_id", referencedColumnName = "id")
     private Rider deliverRider; 
     
     @Column(name = "Time of Request", nullable = false)
     private LocalDateTime now = LocalDateTime.now();  
     
-    @Column(name = "User", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
 
-    @Column(name = "Product List", nullable = false)
-    private List<String> ProductList;
+    @ManyToMany
+    @JoinTable(
+        name="Product_List",
+        joinColumns= @JoinColumn(name = "request_id"),
+        inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> productList;
 
-    public Request( Rider deliverRider, LocalDateTime now, User user, List<String> ProductList) {
+    public Request( Rider deliverRider, LocalDateTime now, User user, List<Product> productList) {
         this.deliverRider = deliverRider;
         this.now = now;
         this.user = user;
-        this.ProductList = ProductList;
+        this.productList = productList;
     }
 
 
-    public List<String> getProductList() {
-        return this.ProductList;
+    public List<Product> getproductList() {
+        return this.productList;
     }
 
-    public void setProductList(List<String> ProductList) {
-        this.ProductList = ProductList;
+    public void setproductList(List<Product> productList) {
+        this.productList = productList;
     }
 
     public int getId() {

@@ -29,7 +29,7 @@ public class RequestService {
         this.riderService = riderService;
     }
 
-    public void saveRequest(List<String> Products, User user ){
+    public void saveRequest(List<Product> Products, User user ){
         List<Rider> Riders = riderService.getAllRiders();
         Collections.shuffle(Riders);
         for (Integer i = 0; i < Riders.size(); i ++){
