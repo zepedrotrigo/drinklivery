@@ -1,17 +1,41 @@
 version: '3.1'
 
 services:
-  react-fe:
+  manager-fe:
     build:
-      context: ../frontend
+      context: ../frontend/manager
       dockerfile: Dockerfile
     volumes:
-      - '../frontend:/frontend'
+      - '../frontend/manager:/frontend/manager'
     ports:
       - 3000:3000
     networks:
       my-network:
         ipv4_address: 172.18.0.2
+    stdin_open: true
+  rider-fe:
+    build:
+      context: ../frontend/rider
+      dockerfile: Dockerfile
+    volumes:
+      - '../frontend/rider:/frontend/rider'
+    ports:
+      - 3001:3000
+    networks:
+      my-network:
+        ipv4_address: 172.18.0.3
+    stdin_open: true
+  user-fe:
+    build:
+      context: ../frontend/user
+      dockerfile: Dockerfile
+    volumes:
+      - '../frontend/user:/frontend/user'
+    ports:
+      - 3002:3000
+    networks:
+      my-network:
+        ipv4_address: 172.18.0.4
     stdin_open: true
 
   api-spring:
@@ -22,7 +46,7 @@ services:
       - './api:/api'
     networks:
       my-network:
-        ipv4_address: 172.18.0.3
+        ipv4_address: 172.18.0.5
 
   db:
     image: mysql:8.0.28
@@ -37,7 +61,7 @@ services:
         - "9906:3306"
     networks:
       my-network:
-        ipv4_address: 172.18.0.4
+        ipv4_address: 172.18.0.6
     volumes:
       - ./db/src:/docker-entrypoint-initdb.d # import .sql files
       - ./db/sql-db:/var/lib/mysql # save db state
@@ -51,7 +75,7 @@ services:
       - db
     networks:
       my-network:
-        ipv4_address: 172.18.0.5
+        ipv4_address: 172.18.0.7
 
 networks: 
   my-network:
