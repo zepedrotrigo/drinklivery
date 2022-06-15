@@ -32,12 +32,13 @@ public class RequestService {
     public void saveRequest(List<String> Products, User user ){
         List<Rider> Riders = riderService.getAllRiders();
         Collections.shuffle(Riders);
-        for (i = 0; i < Riders.length(); i ++){
-            if (Riders.get(i).getOccupied() == True){
+        for (Integer i = 0; i < Riders.size(); i ++){
+            if (Riders.get(i).getOccupied() == true){
                 continue;
             }
             else {
-                Riders.set(True, Riders.get(i).getOccupied());
+                Rider deliverRider = Riders.get(i);
+                deliverRider.setOccupied(true);
                 Request req = new Request( deliverRider, LocalDateTime.now(), user, Products);
                 save(req);
             }

@@ -26,7 +26,7 @@ public class Rider extends Person {
         this.numAcceptedDeliveries = 0;
         this.numRefusedDeliveries = 0;
         this.rating = 5.0;
-        this.occupied = False;
+        this.occupied = false;
     }
 
 

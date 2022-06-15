@@ -1,6 +1,7 @@
 package com.tqs.drinkerly.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tqs.drinkerly.service.RequestService;
+import com.tqs.drinkerly.model.Product;
 import com.tqs.drinkerly.service.ProductService;
 
 @RestController
@@ -34,7 +36,8 @@ class Controller {
 
     @GetMapping("/allproducts")
     public List<Product> getProducts(){
-        return productService.getAllProducts();
+        return (List<Product>) productService.getAllProducts();
     }
     
 }
+ 
