@@ -29,13 +29,11 @@ public class Product {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="winery_id", referencedColumnName = "id")
     private Winery winery;
-    List<String> foodPairings;
-
 
     public Product() {
     }
 
-    public Product(String name, String Type, String country, String region, String grapeVariety, String description, double volume, double alcoholicVolume, double buyPrice, double retailPrice, double ratingScore, double numRatings, int stock, Winery winery, List<String> foodPairings) {
+    public Product(String name, String Type, String country, String region, String grapeVariety, String description, double volume, double alcoholicVolume, double buyPrice, double retailPrice, double ratingScore, double numRatings, int stock, Winery winery) {
         this.name = name;
         this.Type = Type;
         this.country = country;
@@ -50,7 +48,6 @@ public class Product {
         this.numRatings = numRatings;
         this.stock = stock;
         this.winery = winery;
-        this.foodPairings = foodPairings;
     }
 
 
@@ -166,14 +163,6 @@ public class Product {
         this.winery = winery;
     }
 
-    public List<String> getFoodPairings() {
-        return this.foodPairings;
-    }
-
-    public void setFoodPairings(List<String> foodPairings) {
-        this.foodPairings = foodPairings;
-    }
-
     @Override
     public String toString() {
         return "{" +
@@ -191,7 +180,6 @@ public class Product {
             ", numRatings='" + getNumRatings() + "'" +
             ", stock='" + getStock() + "'" +
             ", winery='" + getWinery() + "'" +
-            ", foodPairings='" + getFoodPairings() + "'" +
             "}";
     }
 
