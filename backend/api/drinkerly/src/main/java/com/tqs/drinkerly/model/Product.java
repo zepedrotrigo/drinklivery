@@ -2,21 +2,40 @@ package com.tqs.drinkerly.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 enum Type {
     RED, WHITE, SPARKLING, ROSE, DESSERT, FORTIFIED
  }
 
+@Entity
+@Table(name = "Product")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     private String name, Type, country, region, grapeVariety, description; // type can be [red, white, sparkling, rose, dessert, fortified]
     private double volume, alcoholicVolume, buyPrice, retailPrice, ratingScore, numRatings;
     private int stock;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="winery_id", referencedColumnName = "id")
+    private Winery winery;
     List<String> foodPairings;
 
 
     public Product() {
     }
 
-    public Product(String name, String Type, String country, String region, String grapeVariety, String description, double volume, double alcoholicVolume, double buyPrice, double retailPrice, double ratingScore, double numRatings, int stock, List<String> foodPairings) {
+    public Product(String name, String Type, String country, String region, String grapeVariety, String description, double volume, double alcoholicVolume, double buyPrice, double retailPrice, double ratingScore, double numRatings, int stock, Winery winery, List<String> foodPairings) {
         this.name = name;
         this.Type = Type;
         this.country = country;
@@ -30,6 +49,7 @@ public class Product {
         this.ratingScore = ratingScore;
         this.numRatings = numRatings;
         this.stock = stock;
+        this.winery = winery;
         this.foodPairings = foodPairings;
     }
 
@@ -138,6 +158,14 @@ public class Product {
         this.stock = stock;
     }
 
+    public Winery getWinery() {
+        return this.winery;
+    }
+
+    public void setWinery(Winery winery) {
+        this.winery = winery;
+    }
+
     public List<String> getFoodPairings() {
         return this.foodPairings;
     }
@@ -162,6 +190,7 @@ public class Product {
             ", ratingScore='" + getRatingScore() + "'" +
             ", numRatings='" + getNumRatings() + "'" +
             ", stock='" + getStock() + "'" +
+            ", winery='" + getWinery() + "'" +
             ", foodPairings='" + getFoodPairings() + "'" +
             "}";
     }
