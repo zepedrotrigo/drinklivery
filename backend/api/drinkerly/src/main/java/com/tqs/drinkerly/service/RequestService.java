@@ -37,9 +37,8 @@ public class RequestService {
                 continue;
             }
             else {
-                Rider deliverRider = Riders.get(i);
-                deliverRider.setOccupied(true);
-                Request req = new Request( deliverRider, LocalDateTime.now(), user, Products);
+                Riders.get(i).setOccupied(true);
+                Request req = new Request(Riders.get(i), LocalDateTime.now(), user, Products);
                 save(req);
             }
         }
