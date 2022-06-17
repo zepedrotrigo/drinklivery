@@ -3,7 +3,8 @@ on:
     push:
         branches:
             - main
-            - ci-cd
+    pull_request:
+        branches: [ "main" ]
 jobs:
     build:
         name: Build
