@@ -30,6 +30,9 @@ public class Rider {
     @OneToMany(mappedBy = "deliverRider")
     List<Request> requests;
 
+    public Rider() {
+        
+    }
 
     public Rider(String firstName, String lastName, String password, String address, int age, int nif, String phone,
             String email, double rating, String vehicleType, String licensePlate, int numDeliveries,

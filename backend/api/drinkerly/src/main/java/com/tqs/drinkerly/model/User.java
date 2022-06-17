@@ -25,6 +25,10 @@ public class User  {
     @OneToMany(mappedBy = "user")
     List<Request> requests;
 
+    public User() {
+
+    }
+    
     public User(String firstName, String lastName, String password, String address, int age, int nif, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;

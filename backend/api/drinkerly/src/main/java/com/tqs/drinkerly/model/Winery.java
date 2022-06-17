@@ -24,6 +24,10 @@ public class Winery {
     @OneToMany(mappedBy = "winery")
     List<Product> products;
 
+    public Winery() {
+        
+    }
+
     public Winery(String name, String address, int nif, String phone, String email, String website, List<Product> products) {
         this.nif = nif;
         this.name = name;
