@@ -25,7 +25,8 @@ class Controller {
 
     @GetMapping("/v1/some_endpoint")
     @ResponseBody
-    String getSomeEndPoint(@RequestParam(required = false) Optional<String> date) throws IOException, InterruptedException {
+    String getSomeEndPoint(@RequestParam(required = false) Optional<String> date)
+            throws IOException, InterruptedException {
         return "okey";
     }
 
