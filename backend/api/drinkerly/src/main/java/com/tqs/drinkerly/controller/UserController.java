@@ -12,33 +12,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tqs.drinkerly.service.RequestService;
+import com.tqs.drinkerly.service.UserService;
 import com.tqs.drinkerly.model.Product;
 import com.tqs.drinkerly.service.ProductService;
 
 @RestController
-class Controller {
+class UserController {
     @Autowired
     RequestService reqserv;
 
     @Autowired
     ProductService productService;
-
-    @GetMapping("/v1/some_endpoint")
-    @ResponseBody
-    String getSomeEndPoint(@RequestParam(required = false) Optional<String> date)
-            throws IOException, InterruptedException {
-        return "okey";
-    }
-
-    @PostMapping("/request")
-    public void postRequest( ){
-
-    }
-
-    @GetMapping("/allproducts")
-    public List<Product> getProducts(){
-        return (List<Product>) productService.getAllProducts();
-    }
     
+    @PostMapping("/v1/register_user")
+    public int registerUser(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String password, @RequestParam String address, @RequestParam int age,
+            @RequestParam int nif, @RequestParam String phone, @RequestParam String email) {
+
+        UserService.registerUser(firstName, lastName, password, address, age, nif, phone, email);
+        return 200;
+    }
 }
  
