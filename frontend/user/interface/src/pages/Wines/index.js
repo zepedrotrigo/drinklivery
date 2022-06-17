@@ -1,8 +1,22 @@
-import React from 'react'
+import React, {useState} from 'react'
+import axios from 'axios';
 
 import drinks from './sample'
 
 const Wines = () => {
+
+    const [wines, setWines] = useState([]);
+
+    
+    axios.get('/allproducts')
+    .then(response =>{
+        console.log(response);
+        setWines(response);
+    })
+    .catch(err =>{
+        console.log(err);
+    })
+
     return (
         <div className="container-4/5 mt-16 mb-8">
 
