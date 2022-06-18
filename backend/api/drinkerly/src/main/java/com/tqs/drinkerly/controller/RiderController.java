@@ -13,8 +13,7 @@ import com.tqs.drinkerly.service.RiderService;
 class RiderController {
     @PostMapping("/v1/riders/register")
     public ResponseEntity<Rider> registerRider(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String password, @RequestParam String address, @RequestParam int age, @RequestParam int nif, @RequestParam String phone,
-    @RequestParam String email, @RequestParam double rating, @RequestParam String vehicleType, @RequestParam String licensePlate, @RequestParam int numDeliveries,
-    @RequestParam int numAcceptedDeliveries, @RequestParam int numRefusedDeliveries, @RequestParam boolean occupied) {
+    @RequestParam String email, @RequestParam String vehicleType, @RequestParam String licensePlate) {
         Rider rider;
 
         if (password.length() < 8 || email == null || firstName == null || lastName == null || nif == 0 || phone == null)
@@ -22,8 +21,7 @@ class RiderController {
 
         try {
             rider = new Rider(firstName, lastName, password, address, age, nif, phone,
-                    email, rating, vehicleType, licensePlate, numDeliveries,
-                    numAcceptedDeliveries, numRefusedDeliveries, occupied);
+                    email, vehicleType, licensePlate);
 
             RiderService.registerRider(rider);
 
