@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -14,12 +15,35 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "Rider")
 public class Rider {
-    private int age, nif;
-    private String firstName, lastName, password, address, phone, email;
-
+    @Column(nullable = false)
+    private int age;
+    @Column(nullable = false)
+    private int nif;
+    @Column(nullable = false)
+    private String firstName;
+    @Column(nullable = false)
+    private String lastName;
+    @Column(nullable = false)
+    private String password;
+    @Column(nullable = false)
+    private String address;
+    @Column(nullable = false)
+    private String phone;
+    @Column(nullable = false)
+    private String email;
+    @Column(nullable = false)
     private double rating;
-    private String vehicleType, licensePlate;
-    private int numDeliveries, numAcceptedDeliveries, numRefusedDeliveries;
+    @Column(nullable = false)
+    private String vehicleType;
+    @Column(nullable = false)
+    private String licensePlate;
+    @Column(nullable = false)
+    private int numDeliveries;
+    @Column(nullable = false)
+    private int numAcceptedDeliveries;
+    @Column(nullable = false)
+    private int numRefusedDeliveries;
+    @Column(nullable = false)
     private boolean occupied;
 
     @Id
