@@ -11,6 +11,7 @@ import com.tqs.drinkerly.repository.RiderRepository;
 
 @Service
 public class RiderService {
+	
     private static RiderRepository riderRepository;
 
     @Autowired
