@@ -12,16 +12,17 @@ import com.tqs.drinkerly.model.Request;
 import com.tqs.drinkerly.model.User;
 import com.tqs.drinkerly.model.Rider;
 import com.tqs.drinkerly.repository.RequestRepository;
-import com.tqs.drinkerly.repository.RiderRepository;
+import com.tqs.drinkerly.service.RiderService;
+
 
 @Service
 public class RequestService {
+
     @Autowired
     private final RiderService riderService;
 
+    @Autowired
     private final RequestRepository requestRepository;
-    
-
 
     @Autowired
     public RequestService(RequestRepository requestRepository, RiderService riderService) {

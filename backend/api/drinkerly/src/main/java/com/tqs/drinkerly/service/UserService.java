@@ -8,6 +8,7 @@ import com.tqs.drinkerly.repository.UserRepository;
 
 @Service
 public class UserService {
+    
     private static UserRepository userRepository;
 
     @Autowired
