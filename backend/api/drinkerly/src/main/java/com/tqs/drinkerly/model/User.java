@@ -21,7 +21,7 @@ public class User {
 
     @Column(nullable = false)
     private int age;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private int nif;
     @Column(nullable = false)
     private String firstName;
@@ -31,9 +31,9 @@ public class User {
     private String password;
     @Column(nullable = false)
     private String address;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phone;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @JsonIgnore

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Rider {
     @Column(nullable = false)
     private int age;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private int nif;
     @Column(nullable = false)
     private String firstName;
@@ -27,15 +27,15 @@ public class Rider {
     private String password;
     @Column(nullable = false)
     private String address;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phone;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
     private double rating;
     @Column(nullable = false)
     private String vehicleType;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String licensePlate;
     @Column(nullable = false)
     private int numDeliveries;
