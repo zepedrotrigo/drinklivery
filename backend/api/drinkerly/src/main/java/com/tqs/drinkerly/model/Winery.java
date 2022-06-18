@@ -28,14 +28,13 @@ public class Winery {
         
     }
 
-    public Winery(String name, String address, int nif, String phone, String email, String website, List<Product> products) {
+    public Winery(String name, String address, int nif, String phone, String email, String website) {
         this.nif = nif;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.website = website;
-        this.products = products;
     }
 
     public int getNif() {
@@ -92,6 +91,10 @@ public class Winery {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public void addProducts(Product p) {
+        this.products.add(p);
     }
 
     @Override
