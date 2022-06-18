@@ -8,7 +8,7 @@ import com.tqs.drinkerly.service.RiderService;
 
 @RestController
 class RiderController {
-    @PostMapping("/v1/register_rider")
+    @PostMapping("/v1/riders")
     public int registerRider(String firstName, String lastName, String password, String address, int age, int nif, String phone,
     String email, double rating, String vehicleType, String licensePlate, int numDeliveries,
             int numAcceptedDeliveries, int numRefusedDeliveries, boolean occupied) {

@@ -8,7 +8,7 @@ import com.tqs.drinkerly.service.UserService;
 
 @RestController
 class UserController {
-    @PostMapping("/v1/register_user")
+    @PostMapping("/v1/users")
     public int registerUser(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String password, @RequestParam String address, @RequestParam int age,
             @RequestParam int nif, @RequestParam String phone, @RequestParam String email) {
 
