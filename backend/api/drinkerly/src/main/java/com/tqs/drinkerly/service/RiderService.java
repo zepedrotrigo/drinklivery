@@ -19,19 +19,9 @@ public class RiderService {
         RiderService.riderRepository = riderRepository;
     }
 
-    public static void save(Rider rider) {
+    public static Rider registerRider(Rider rider) {
         riderRepository.save(rider);
-    }
-
-    public static void registerRider(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String password, @RequestParam String address, @RequestParam int age, @RequestParam int nif, @RequestParam String phone,
-    @RequestParam String email, @RequestParam double rating, @RequestParam String vehicleType, @RequestParam String licensePlate, @RequestParam int numDeliveries,
-            int numAcceptedDeliveries, int numRefusedDeliveries, boolean occupied) {
-        
-        Rider rider = new Rider(firstName, lastName, password, address, age, nif, phone,
-                email, rating, vehicleType, licensePlate, numDeliveries,
-                numAcceptedDeliveries, numRefusedDeliveries, occupied);
-        
-        save(rider);
+        return rider;
     }
     
     public List<Rider> getAllRiders() {

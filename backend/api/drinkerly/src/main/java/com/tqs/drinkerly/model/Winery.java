@@ -19,17 +19,17 @@ public class Winery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private int nif;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private String address;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phone;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String website;
 
     @JsonIgnore
@@ -48,6 +48,10 @@ public class Winery {
         this.email = email;
         this.website = website;
     }
+
+	public Long getId() {
+		return id;
+	}
 
     public int getNif() {
         return this.nif;
