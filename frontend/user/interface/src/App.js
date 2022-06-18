@@ -4,7 +4,6 @@ import Home from './pages/Home'
 
 import Navbar from './components/Navbar'
 
-import './App.css';
 import Wines from './pages/Wines';
 import Profile from './pages/Profile';
 import Checkout from './pages/Checkout';
