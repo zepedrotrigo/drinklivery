@@ -3,6 +3,8 @@ package com.tqs.drinkerly.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import com.tqs.drinkerly.model.Product;
 import com.tqs.drinkerly.repository.ProductRepository;
 
@@ -22,4 +24,9 @@ public class ProductService {
     public Iterable<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+    public Product getProduct(long id) {
+		return productRepository.findById(id).get();
+	}
+
 }
