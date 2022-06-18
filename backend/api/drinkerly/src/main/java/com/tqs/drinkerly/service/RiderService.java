@@ -3,6 +3,7 @@ package com.tqs.drinkerly.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,6 +28,19 @@ public class RiderService {
     public List<Rider> getAllRiders() {
         return (List<Rider>) riderRepository.findAll();
     }
+
+	public Rider getRiderById(long id){
+		return riderRepository.findById(id).get();
+	}
+
+	public ResponseEntity<Void> deleteRiderById(long id){
+
+		Rider rider = riderRepository.findById(id).get();
+
+		riderRepository.delete(rider);
+		
+		return ResponseEntity.noContent().build();
+	}
 
     public Rider updateRiderEmailById(long id, @RequestParam String email) {
 

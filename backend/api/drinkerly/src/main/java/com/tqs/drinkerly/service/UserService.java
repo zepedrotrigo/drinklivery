@@ -1,6 +1,7 @@
 package com.tqs.drinkerly.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.tqs.drinkerly.model.User;
@@ -24,6 +25,19 @@ public class UserService {
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+	public User getUserById(long id){
+		return userRepository.findById(id).get();
+	}
+
+	public ResponseEntity<Void> deleteUserById(long id){
+
+		User user = userRepository.findById(id).get();
+
+		userRepository.delete(user);
+		
+		return ResponseEntity.noContent().build();
+	}
 
     public User updateUserFirstNameById(long id, String firstName) {
 
