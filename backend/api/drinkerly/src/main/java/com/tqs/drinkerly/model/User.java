@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -13,13 +14,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "User")
-public class User  {
-    private int age, nif;
-    private String firstName, lastName, password, address, phone, email;
-
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false)
+    private int age;
+    @Column(nullable = false)
+    private int nif;
+    @Column(nullable = false)
+    private String firstName;
+    @Column(nullable = false)
+    private String lastName;
+    @Column(nullable = false)
+    private String password;
+    @Column(nullable = false)
+    private String address;
+    @Column(nullable = false)
+    private String phone;
+    @Column(nullable = false)
+    private String email;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
