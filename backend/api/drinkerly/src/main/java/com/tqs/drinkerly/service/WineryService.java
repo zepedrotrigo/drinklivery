@@ -16,15 +16,9 @@ public class WineryService {
         WineryService.wineryRepository = wineryRepository;
     }
 
-    public static void save(Winery winery) {
+    public static Winery registerWinery(Winery winery) {
         wineryRepository.save(winery);
-    }
-
-    public static void registerWinery(@RequestParam String name, @RequestParam String address, @RequestParam int nif, @RequestParam String phone, @RequestParam String email, @RequestParam String website) {
-        
-        Winery winery = new Winery(name, address, nif, phone, email, website);
-        
-        save(winery);
+        return winery;
     }
     
     public Iterable<Winery> getAllWinerys() {

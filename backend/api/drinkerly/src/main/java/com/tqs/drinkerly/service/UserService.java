@@ -15,15 +15,10 @@ public class UserService {
         UserService.userRepository = userRepository;
     }
 
-    public static void save(User user) {
+    public static User registerUser(User user) {
         userRepository.save(user);
+        return user;
     }
-
-    public static void registerUser(String firstName, String lastName, String password, String address, int age, int nif, String phone, String email) {
-        User user = new User(firstName, lastName, password, address, age, nif, phone, email);
-        save(user);
-    }
-
     
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();

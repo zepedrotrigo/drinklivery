@@ -49,6 +49,10 @@ public class Winery {
         this.website = website;
     }
 
+	public Long getId() {
+		return id;
+	}
+
     public int getNif() {
         return this.nif;
     }

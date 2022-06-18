@@ -78,6 +78,10 @@ public class Rider {
         this.occupied = occupied;
     }
     
+	public Long getId() {
+		return id;
+	}
+
     public String getFirstName() {
         return this.firstName;
     }
@@ -200,14 +204,6 @@ public class Rider {
 
     public void setOccupied(boolean occupied) {
         this.occupied = occupied;
-    }
-
-    public long getId() {
-        return this.id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public List<Request> getRequests() {
