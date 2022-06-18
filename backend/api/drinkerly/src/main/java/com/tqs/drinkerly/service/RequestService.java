@@ -38,6 +38,7 @@ public class RequestService {
             }
             else {
                 Riders.get(i).setOccupied(true);
+                Riders.get(i).setNumAcceptedDeliveries(Riders.get(i).getNumAcceptedDeliveries()+1);
                 Request req = new Request(Riders.get(i), LocalDateTime.now(), user, Products);
                 save(req);
             }
