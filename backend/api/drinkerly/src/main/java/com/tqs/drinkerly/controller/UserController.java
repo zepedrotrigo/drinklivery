@@ -39,52 +39,52 @@ class UserController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("users/{id}")
 	public User getUserById(@PathVariable(value = "id") long id) {
 		return userService.getUserById(id);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("users/{id}")
 	public ResponseEntity<Void> deleteUserById(@PathVariable(value = "id") long id) {
 		return userService.deleteUserById(id);
 	}
 
-    @PutMapping("users/{id}")
+    @PutMapping("users/firstName/{id}")
     public User updateUserFirstNameById(@PathVariable(value = "id") long id,  @RequestParam String firstName) {
 		return userService.updateUserFirstNameById(id, firstName);
 	}
 
-    @PutMapping("users/{id}")
+    @PutMapping("users/lastName/{id}")
     public User updateUserLastNameById(@PathVariable(value = "id") long id,  @RequestParam String lastName) {
 		return userService.updateUserLastNameById(id, lastName);
 	}
 
-    @PutMapping("users/{id}")
+    @PutMapping("users/password/{id}")
     public User updateUserPasswordById(@PathVariable(value = "id") long id,  @RequestParam String password) {
 		return userService.updateUserPasswordById(id, password);
 	}
 
-    @PutMapping("users/{id}")
+    @PutMapping("users/email/{id}")
     public User updateUserEmailById(@PathVariable(value = "id") long id,  @RequestParam String email) {
 		return userService.updateUserEmailById(id, email);
 	}
 
-    @PutMapping("users/{id}")
+    @PutMapping("users/address/{id}")
     public User updateUserAddressById(@PathVariable(value = "id") long id,  @RequestParam String address) {
 		return userService.updateUserAddressById(id, address);
 	}
 
-    @PutMapping("users/{id}")
+    @PutMapping("users/phone/{id}")
     public User updateUserPhoneById(@PathVariable(value = "id") long id,  @RequestParam String phone) {
 		return userService.updateUserPhoneById(id, phone);
 	}
 
-    @PutMapping("users/{id}")
+    @PutMapping("users/age/{id}")
     public User updateUserAgeById(@PathVariable(value = "id") long id,  @RequestParam int age) {
 		return userService.updateUserAgeById(id, age);
 	}
 
-    @PutMapping("users/{id}")
+    @PutMapping("users/nif/{id}")
     public User updateUserNifById(@PathVariable(value = "id") long id,  @RequestParam int nif) {
 		return userService.updateUserNifById(id, nif);
 	}
