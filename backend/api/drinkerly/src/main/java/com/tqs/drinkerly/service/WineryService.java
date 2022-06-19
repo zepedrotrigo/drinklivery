@@ -15,11 +15,6 @@ public class WineryService {
     public WineryService(WineryRepository wineryRepository) {
         WineryService.wineryRepository = wineryRepository;
     }
-
-    public static Winery registerWinery(Winery winery) {
-        wineryRepository.save(winery);
-        return winery;
-    }
     
     public Iterable<Winery> getAllWinerys() {
         return wineryRepository.findAll();

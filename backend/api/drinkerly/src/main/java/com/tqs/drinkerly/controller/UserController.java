@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,30 +13,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.tqs.drinkerly.model.User;
+import com.tqs.drinkerly.repository.UserRepository;
 import com.tqs.drinkerly.service.UserService;
 
 @RestController
 class UserController {
 
     @Autowired
-	private UserService userService;
+    UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/v1/users/register")
-    public ResponseEntity<User> registerUser(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String password, @RequestParam String address, @RequestParam int age,
-    @RequestParam int nif, @RequestParam String phone, @RequestParam String email) {
-        User user;
-
-        if (password.length() < 8 || email == null || firstName == null || lastName == null || nif == 0 || phone == null)
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
+        if (user.getPassword().length() < 8 || user.getEmail() == null || user.getEmail().equals("")
+                || user.getFirstName() == null || user.getFirstName().equals("")
+                || user.getLastName() == null || user.getLastName().equals("")
+                || user.getNif() == 0 || user.getPhone() == null || user.getPhone().equals(""))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        try {
-            user = new User(firstName, lastName, password, address, age, nif, phone, email);
-            UserService.registerUser(user);
-
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
+        userRepository.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
