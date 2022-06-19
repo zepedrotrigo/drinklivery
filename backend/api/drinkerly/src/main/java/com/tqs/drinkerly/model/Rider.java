@@ -31,7 +31,7 @@ public class Rider {
     private String phone;
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(columnDefinition="Decimal(10,1) default '5.0'", nullable = false)
+    @Column(columnDefinition="Double(2,1) default 5.0", nullable = false)
     private double rating;
     @Column(nullable = false)
     private String vehicleType;

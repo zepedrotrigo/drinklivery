@@ -20,15 +20,14 @@ class RiderController {
     @Autowired
     RiderRepository riderRepository;
 
-    @GetMapping("/")
-    @ResponseBody
-    String getSomeEndPoint()
-            throws IOException, InterruptedException {
-        return "okey";
-    }
-
     @PostMapping("/v1/riders/register")
     public ResponseEntity<Rider> registerRider(@RequestBody Rider rider) {
+        if (rider.getPassword().length() < 8 || rider.getEmail() == null || rider.getEmail().equals("")
+                || rider.getFirstName() == null || rider.getFirstName().equals("")
+                || rider.getLastName() == null || rider.getLastName().equals("")
+                || rider.getNif() == 0 || rider.getPhone() == null || rider.getPhone().equals(""))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         riderRepository.save(rider);
         return new ResponseEntity<>(rider, HttpStatus.CREATED);
     }
