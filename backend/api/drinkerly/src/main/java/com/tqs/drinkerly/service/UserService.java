@@ -14,11 +14,6 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         UserService.userRepository = userRepository;
     }
-
-    public static User registerUser(User user) {
-        userRepository.save(user);
-        return user;
-    }
     
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
