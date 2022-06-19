@@ -47,5 +47,18 @@ public class UserRepositoryTests {
 
         Assertions.assertThat(u.getId()).isGreaterThan(0);
     }
+    
+    @Test
+    public void getUser_Test(){
+        User u = uRep.findById(1L).get();
 
+        Assertions.assertThat(u.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void getListOfUsers_Test(){
+        List<User> users = (List<User>) uRep.findAll();
+
+        Assertions.assertThat(users.size()).isGreaterThan(0);
+    } 
 }
