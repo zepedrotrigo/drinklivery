@@ -17,11 +17,6 @@ public class RiderService {
     public RiderService(RiderRepository riderRepository) {
         RiderService.riderRepository = riderRepository;
     }
-
-    public static Rider registerRider(Rider rider) {
-        riderRepository.save(rider);
-        return rider;
-    }
     
     public List<Rider> getAllRiders() {
         return (List<Rider>) riderRepository.findAll();
