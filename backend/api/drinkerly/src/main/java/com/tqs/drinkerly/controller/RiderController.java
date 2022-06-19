@@ -22,6 +22,7 @@ import com.tqs.drinkerly.service.RiderService;
 
 @RestController
 class RiderController {
+
     @Autowired
     RiderRepository riderRepository;
 

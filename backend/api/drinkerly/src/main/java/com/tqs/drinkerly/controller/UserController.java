@@ -18,6 +18,7 @@ import com.tqs.drinkerly.service.UserService;
 
 @RestController
 class UserController {
+
     @Autowired
     UserRepository userRepository;
 
