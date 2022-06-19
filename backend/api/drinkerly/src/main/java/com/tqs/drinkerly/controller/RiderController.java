@@ -27,7 +27,7 @@ class RiderController {
     RiderRepository riderRepository;
 
     @Autowired
-    RiderService riderService;
+    private RiderService riderService;
 
     @PostMapping("/v1/riders/register")
     public ResponseEntity<Rider> registerRider(@RequestBody Rider rider) {

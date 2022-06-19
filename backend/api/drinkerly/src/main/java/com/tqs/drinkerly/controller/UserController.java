@@ -23,7 +23,7 @@ class UserController {
     UserRepository userRepository;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @PostMapping("/v1/users/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
