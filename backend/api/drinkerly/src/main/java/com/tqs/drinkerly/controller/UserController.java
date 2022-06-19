@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.tqs.drinkerly.model.User;
@@ -36,6 +38,16 @@ class UserController {
 
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
+    @GetMapping("/{id}")
+	public User getUserById(@PathVariable(value = "id") long id) {
+		return userService.getUserById(id);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteUserById(@PathVariable(value = "id") long id) {
+		return userService.deleteUserById(id);
+	}
 
     @PutMapping("users/{id}")
     public User updateUserFirstNameById(@PathVariable(value = "id") long id,  @RequestParam String firstName) {
