@@ -47,6 +47,10 @@ public class RequestService {
         
     }
 
+    public Request getRequestById(long id){
+		return requestRepository.findById(id).get();
+	}
+
     public void save(Request request) {
         requestRepository.save(request);
     }
