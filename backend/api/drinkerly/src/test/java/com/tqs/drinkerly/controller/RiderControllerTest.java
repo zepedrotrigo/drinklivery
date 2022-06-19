@@ -49,6 +49,9 @@ public class RiderControllerTest {
     @MockBean
     RiderRepository riderRepository;
 
+    @MockBean
+    RiderService riderService;
+
     @BeforeEach
     void setUp() {
         rider = new Rider("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 259070137, "938349547",

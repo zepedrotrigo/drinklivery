@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +14,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.tqs.drinkerly.model.User;
 import com.tqs.drinkerly.repository.UserRepository;
+import com.tqs.drinkerly.service.UserService;
 
 @RestController
 class UserController {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/v1/users/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
