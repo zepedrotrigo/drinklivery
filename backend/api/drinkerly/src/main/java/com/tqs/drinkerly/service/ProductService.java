@@ -22,4 +22,9 @@ public class ProductService {
     public Iterable<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+    public Product getProduct(long id) {
+		return productRepository.findById(id).get();
+	}
+
 }
