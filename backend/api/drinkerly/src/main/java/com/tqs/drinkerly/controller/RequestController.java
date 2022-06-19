@@ -20,9 +20,8 @@ import com.tqs.drinkerly.service.RequestService;
 import com.tqs.drinkerly.model.Product;
 import com.tqs.drinkerly.service.ProductService;
 
-@RestController
-class Controller {
-
+public class RequestController {
+    
     @Autowired
     RequestService requestService;
 
@@ -58,6 +57,4 @@ class Controller {
     public Product getProductById(@PathVariable(value = "id") long id){
         return productService.getProduct(id);
     }
-    
 }
- 

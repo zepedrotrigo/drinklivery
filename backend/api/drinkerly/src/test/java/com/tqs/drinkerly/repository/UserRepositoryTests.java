@@ -39,7 +39,7 @@ public class UserRepositoryTests {
     @Autowired
     private UserRepository uRep;
 
-    @Test
+    /*@Test
     @Order(1)
     public void saveUserTest(){
 
