@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import {IoStar, IoStarOutline} from 'react-icons/io5'
 import axios from 'axios';
 import WineCard from '../../components/WineCard';
 
