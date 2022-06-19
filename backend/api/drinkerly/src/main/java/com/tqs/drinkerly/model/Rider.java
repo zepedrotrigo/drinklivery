@@ -31,19 +31,19 @@ public class Rider {
     private String phone;
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
+    @Column(columnDefinition="Double(2,1) default 5.0", nullable = false)
     private double rating;
     @Column(nullable = false)
     private String vehicleType;
     @Column(nullable = false, unique = true)
     private String licensePlate;
-    @Column(nullable = false)
+    @Column(columnDefinition="integer default 0", nullable = false)
     private int numDeliveries;
-    @Column(nullable = false)
+    @Column(columnDefinition="integer default 0", nullable = false)
     private int numAcceptedDeliveries;
-    @Column(nullable = false)
+    @Column(columnDefinition="integer default 0", nullable = false)
     private int numRefusedDeliveries;
-    @Column(nullable = false)
+    @Column(columnDefinition="boolean default false", nullable = false)
     private boolean occupied;
 
     @Id
@@ -59,8 +59,7 @@ public class Rider {
     }
 
     public Rider(String firstName, String lastName, String password, String address, int age, int nif, String phone,
-            String email, double rating, String vehicleType, String licensePlate, int numDeliveries,
-            int numAcceptedDeliveries, int numRefusedDeliveries, boolean occupied) {
+            String email, String vehicleType, String licensePlate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -69,13 +68,13 @@ public class Rider {
         this.nif = nif;
         this.phone = phone;
         this.email = email;
-        this.rating = rating;
+        this.rating = 5.0;
         this.vehicleType = vehicleType;
         this.licensePlate = licensePlate;
-        this.numDeliveries = numDeliveries;
-        this.numAcceptedDeliveries = numAcceptedDeliveries;
-        this.numRefusedDeliveries = numRefusedDeliveries;
-        this.occupied = occupied;
+        this.numDeliveries = 0;
+        this.numAcceptedDeliveries = 0;
+        this.numRefusedDeliveries = 0;
+        this.occupied = false;
     }
     
 	public Long getId() {
