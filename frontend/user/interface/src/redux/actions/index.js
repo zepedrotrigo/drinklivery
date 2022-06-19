@@ -9,3 +9,23 @@ export const signOut = () =>{
         type: 'SIGN_OUT'
     }
 }
+
+export const addToCart = (item) =>{
+    return {
+        type: 'ADD_TO_CART',
+        payload:item,
+    }
+}
+
+export const emptyCart = () =>{
+    return {
+        type: 'EMPTY_CART'
+    }
+}
+
+export const removeFromCart = (index) =>{
+    return {
+        type: 'REMOVE_FROM_CART',
+        payload:index
+    }
+}
