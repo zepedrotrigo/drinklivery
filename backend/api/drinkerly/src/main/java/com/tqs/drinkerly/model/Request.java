@@ -26,7 +26,7 @@ public class Request {
     @JoinColumn(name="rider_id", referencedColumnName = "id")
     private Rider deliverRider; 
     
-    @Column(name = "Time of Request", nullable = false)
+    @Column(name = "Time_of_Request", nullable = false)
     private LocalDateTime now = LocalDateTime.now();  
     
     @ManyToOne(cascade = CascadeType.ALL)
@@ -41,21 +41,25 @@ public class Request {
     )
     private List<Product> productList;
 
+    public Request() {
+        
+    }
+
     public Request( Rider deliverRider, LocalDateTime now, User user, List<Product> productList) {
         this.deliverRider = deliverRider;
         this.now = now;
-        this.user = user;
-        this.productList = productList;
+        /*this.user = user;
+        this.productList = productList;*/
     }
 
 
-    public List<Product> getproductList() {
+    /*public List<Product> getproductList() {
         return this.productList;
     }
 
     public void setproductList(List<Product> productList) {
         this.productList = productList;
-    }
+    }*/
 
     public int getId() {
         return this.id;
@@ -81,12 +85,12 @@ public class Request {
         this.now = now;
     }
 
-    public User getUser() {
+    /*public User getUser() {
         return this.user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
+    }*/
 
 }
