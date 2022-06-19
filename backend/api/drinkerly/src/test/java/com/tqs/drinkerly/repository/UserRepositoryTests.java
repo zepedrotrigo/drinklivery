@@ -1,6 +1,9 @@
 package com.tqs.drinkerly.repository;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -22,6 +25,7 @@ import com.tqs.drinkerly.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -30,6 +34,7 @@ import org.assertj.core.api.Assertions;
 
 
 @DataJpaTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class UserRepositoryTests {
@@ -38,10 +43,10 @@ public class UserRepositoryTests {
     private UserRepository uRep;
 
     @Test
+    @Order(1)
     public void saveUserTest(){
 
-        User u = new User("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 259070137, "938349547",
-        "josetrigo@ua.pt");
+        User u = new User("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 259070137, "938349547", "josetrigo@ua.pt");
 
         uRep.save(u);
 
@@ -49,16 +54,54 @@ public class UserRepositoryTests {
     }
     
     @Test
+    @Order(2)
     public void getUser_Test(){
+
         User u = uRep.findById(1L).get();
 
         Assertions.assertThat(u.getId()).isEqualTo(1L);
     }
 
     @Test
+    @Order(3)
     public void getListOfUsers_Test(){
+
         List<User> users = (List<User>) uRep.findAll();
 
         Assertions.assertThat(users.size()).isGreaterThan(0);
     } 
+
+    @Test
+    @Order(4)
+    public void updateUser_Test(){
+
+        User u = uRep.findById(1L).get();
+
+        u.setEmail("renatoaldias12@ua.pt");
+
+        User uUpdated = uRep.save(u);
+
+        Assertions.assertThat(uUpdated.getEmail()).isEqualTo("renatoaldias12@ua.pt");
+    }
+
+    @Test
+    @Order(5)
+    public void deleteUser_Test(){
+
+        User u = uRep.findById(1L).get();
+
+        uRep.delete(u);
+
+        //uRep.deleteById(1L);
+
+        User u1 = null;
+
+        Optional<User> optionalUser = uRep.findByEmail("renatoaldias12@ua.pt");
+
+        if(optionalUser.isPresent()){
+            u1 = optionalUser.get();
+        }
+
+        Assertions.assertThat(u1).isNull();
+    }
 }
