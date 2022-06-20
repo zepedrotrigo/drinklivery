@@ -38,33 +38,7 @@ services:
         ipv4_address: 172.18.0.4
     stdin_open: true
 
-  services-api:
-    build:
-      context: ./services_api
-      dockerfile: Dockerfile
-    volumes:
-      - './services_api:/services_api'
-    networks:
-      my-network:
-        ipv4_address: 172.18.0.5
-    depends_on:
-      - db
-    links:
-      - db
 
-  user-app-api:
-    build:
-      context: ./user_app_api
-      dockerfile: Dockerfile
-    volumes:
-      - './user_app_api:/user_app_api'
-    networks:
-      my-network:
-        ipv4_address: 172.18.0.8
-    depends_on:
-      - db
-    links:
-      - db
 
   db:
     image: mysql:8.0.28
@@ -77,7 +51,7 @@ services:
         MYSQL_USER: user
         MYSQL_PASSWORD: password
     ports:
-        - "3306:3306"
+        - "9906:3306"
     networks:
       my-network:
         ipv4_address: 172.18.0.6
