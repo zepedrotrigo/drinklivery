@@ -54,6 +54,23 @@ public class Product {
         this.winery = winery;
     }
 
+    public long getId() {
+        return this.id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Request> getRequests() {
+        return this.requests;
+    }
+
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
+    }
+
+
 
     public String getName() {
         return this.name;
