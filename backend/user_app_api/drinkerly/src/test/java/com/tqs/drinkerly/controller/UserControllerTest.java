@@ -138,13 +138,54 @@ public class UserControllerTest {
         when(userRepository.save(user)).thenReturn(user);
 
         mvc.perform(MockMvcRequestBuilders
-        .post("/v1/users/register")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"\", \"email\": \"\"}")
-        )
-        .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .post("/v1/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                        "{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"\", \"email\": \"\"}"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
         Mockito.verify(userRepository, VerificationModeFactory.times(0)).save(Mockito.any(User.class));
     }
     
+    // Register login
+
+    @Test
+    void testValidLogin() throws Exception {
+        when(userService.getUserByEmail(Mockito.any(String.class))).thenReturn(user);
+
+        mvc.perform(post("/v1/users/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("{\"email\": \"%s\", \"password\": \"%s\"}", user.getEmail(),
+                        user.getPassword()))
+                )
+                .andExpect(status().isAccepted());
+
+        Mockito.verify(userService, VerificationModeFactory.times(1)).getUserByEmail(Mockito.any(String.class));
+    }
+
+    @Test
+    void testInvalidEmail() throws Exception {
+        when(userService.getUserByEmail(Mockito.any(String.class))).thenThrow(new NullPointerException("Exception: Invalid Email"));
+
+        mvc.perform(post("/v1/users/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("{\"email\": \"%s\", \"password\": \"%s\"}", "invalidEmail", user.getPassword()))
+                )
+                .andExpect(status().isNotFound());
+
+        Mockito.verify(userService, VerificationModeFactory.times(1)).getUserByEmail(Mockito.any(String.class));
+    }
+
+    @Test
+    void testInvalidPassword() throws Exception {
+        when(userService.getUserByEmail(Mockito.any(String.class))).thenReturn(user);
+
+        mvc.perform(post("/v1/users/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("{\"email\": \"%s\", \"password\": \"%s\"}", user.getEmail(), "invalidPassword"))
+                )
+                .andExpect(status().isForbidden());
+
+        Mockito.verify(userService, VerificationModeFactory.times(1)).getUserByEmail(Mockito.any(String.class));
+    }
 }

@@ -6,7 +6,7 @@ on:
     pull_request:
         branches: [ "main" ]
 jobs:
-    build_services:
+    test_services:
         name: build_services
         runs-on: ubuntu-latest
         steps:
@@ -33,9 +33,9 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              run: mvn -f backend/services_api/drinkerly/pom.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=zepedrotrigo_DrinkLivery
+              run: mvn test -f backend/services_api/drinkerly/pom.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=zepedrotrigo_DrinkLivery
 
-    build_app:
+    test_app:
         name: build_app
         runs-on: ubuntu-latest
         steps:
@@ -62,23 +62,23 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              run: mvn -f backend/user_app_api/drinkerly/pom.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=zepedrotrigo_DrinkLivery
+              run: mvn test -f backend/user_app_api/drinkerly/pom.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=zepedrotrigo_DrinkLivery
 
-    docker:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Set up QEMU
-              uses: docker/setup-qemu-action@v2
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v2
-            - name: Login to DockerHub
-              uses: docker/login-action@v2
-              with:
-                  username: ${{ secrets.DOCKERHUB_USERNAME }}
-                  password: ${{ secrets.DOCKERHUB_TOKEN }}
-            - name: Build and push
-              uses: docker/build-push-action@v3
-              with:
-                  context: ./backend
-                  push: true
-                  tags: user/app:latest
+    #docker:
+        #runs-on: ubuntu-latest
+        #steps:
+        #    - name: Set up QEMU
+        #      uses: docker/setup-qemu-action@v2
+        #    - name: Set up Docker Buildx
+        #      uses: docker/setup-buildx-action@v2
+        #    - name: Login to DockerHub
+        #      uses: docker/login-action@v2
+        #      with:
+        #          username: ${{ secrets.DOCKERHUB_USERNAME }}
+        #          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        #    - name: Build and push
+        #      uses: docker/build-push-action@v3
+        #      with:
+        #          context: ./backend
+        #          push: true
+        #          tags: user/app:latest

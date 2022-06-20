@@ -151,12 +151,54 @@ public class RiderControllerTest {
         when(riderRepository.save(rider)).thenReturn(rider);
 
         mvc.perform(MockMvcRequestBuilders
-        .post("/v1/riders/register")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
-        )
-        .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .post("/v1/riders/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                        "{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
         Mockito.verify(riderRepository, VerificationModeFactory.times(0)).save(Mockito.any(Rider.class));
+    }
+    
+    // Register login
+
+    @Test
+    void testValidLogin() throws Exception {
+        when(riderService.getRiderByEmail(Mockito.any(String.class))).thenReturn(rider);
+
+        mvc.perform(post("/v1/riders/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("{\"email\": \"%s\", \"password\": \"%s\"}", rider.getEmail(),
+                        rider.getPassword()))
+                )
+                .andExpect(status().isAccepted());
+
+        Mockito.verify(riderService, VerificationModeFactory.times(1)).getRiderByEmail(Mockito.any(String.class));
+    }
+
+    @Test
+    void testInvalidEmail() throws Exception {
+        when(riderService.getRiderByEmail(Mockito.any(String.class))).thenThrow(new NullPointerException("Exception: Invalid Email"));
+
+        mvc.perform(post("/v1/riders/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("{\"email\": \"%s\", \"password\": \"%s\"}", "invalidEmail", rider.getPassword()))
+                )
+                .andExpect(status().isNotFound());
+
+        Mockito.verify(riderService, VerificationModeFactory.times(1)).getRiderByEmail(Mockito.any(String.class));
+    }
+
+    @Test
+    void testInvalidPassword() throws Exception {
+        when(riderService.getRiderByEmail(Mockito.any(String.class))).thenReturn(rider);
+
+        mvc.perform(post("/v1/riders/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("{\"email\": \"%s\", \"password\": \"%s\"}", rider.getEmail(), "invalidPassword"))
+                )
+                .andExpect(status().isForbidden());
+
+        Mockito.verify(riderService, VerificationModeFactory.times(1)).getRiderByEmail(Mockito.any(String.class));
     }
 }

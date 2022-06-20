@@ -25,6 +25,10 @@ public class UserService {
 		return userRepository.findById(id).get();
 	}
 
+	public User getUserByEmail(String email){
+		return userRepository.findByEmail(email);
+	}
+
 	public ResponseEntity<Void> deleteUserById(long id){
 
 		User user = userRepository.findById(id).get();
