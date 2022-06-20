@@ -24,8 +24,12 @@ public class RiderService {
         return (List<Rider>) riderRepository.findAll();
     }
 
-	public Rider getRiderById(long id){
+	public Rider getRiderById(long id) {
 		return riderRepository.findById(id).get();
+	}
+	
+	public Rider getRiderByEmail(String email){
+		return riderRepository.findByEmail(email);
 	}
 
 	public ResponseEntity<Void> deleteRiderById(long id){

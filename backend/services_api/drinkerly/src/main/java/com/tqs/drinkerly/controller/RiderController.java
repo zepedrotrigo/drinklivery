@@ -1,6 +1,7 @@
 package com.tqs.drinkerly.controller;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,30 @@ class RiderController {
 
     @PostMapping("/v1/riders/register")
     public ResponseEntity<Rider> registerRider(@RequestBody Rider rider) {
-        if (rider.getPassword().length() < 8 || rider.getEmail() == null || rider.getEmail().equals("")
-                || rider.getFirstName() == null || rider.getFirstName().equals("")
-                || rider.getLastName() == null || rider.getLastName().equals("")
-                || rider.getNif() == 0 || rider.getPhone() == null || rider.getPhone().equals(""))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      if (rider.getPassword().length() < 8 || rider.getEmail() == null || rider.getEmail().equals("")
+          || rider.getFirstName() == null || rider.getFirstName().equals("")
+          || rider.getLastName() == null || rider.getLastName().equals("")
+          || rider.getNif() == 0 || rider.getPhone() == null || rider.getPhone().equals(""))
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        riderRepository.save(rider);
-        return new ResponseEntity<>(rider, HttpStatus.CREATED);
+      riderRepository.save(rider);
+      return new ResponseEntity<>(rider, HttpStatus.CREATED);
+    }
+    
+    @PostMapping("/v1/riders/login")
+    public ResponseEntity<Rider> createAuthenticationToken(@RequestBody Map<String, String> payload) {
+        String email = payload.get("email");
+        String password = payload.get("password");
+        try {
+          Rider rider = riderService.getRiderByEmail(email);
+          
+          if (rider.getEmail().equals(email) && rider.getPassword().equals(password))
+            return new ResponseEntity<>(rider, HttpStatus.ACCEPTED);
+        } catch (NullPointerException e) {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @GetMapping("riders/{id}")
