@@ -76,7 +76,8 @@ public class Rider {
         this.numRefusedDeliveries = 0;
         this.occupied = false;
     }
-    
+
+
 	public Long getId() {
 		return id;
 	}

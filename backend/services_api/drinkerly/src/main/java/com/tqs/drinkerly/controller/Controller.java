@@ -36,7 +36,7 @@ class Controller {
         return "okey";
     }
 
-    @PostMapping("/request")
+    @PostMapping("/v1/request")
     public ResponseEntity<Void> postRequest(@RequestParam List<Product> products, @RequestParam User user) {
 
         requestService.saveRequest(products, user);
@@ -49,7 +49,7 @@ class Controller {
 		return requestService.getRequestById(id);
 	}
 
-    @GetMapping("/allproducts")
+    @GetMapping("/v1/allproducts")
     public List<Product> getProducts(){
         return (List<Product>) productService.getAllProducts();
     }
