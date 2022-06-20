@@ -41,6 +41,7 @@ import org.springframework.http.MediaType;
 
 @WebMvcTest(RiderController.class)
 public class RiderControllerTest {
+    private String data;
     private Rider rider;
 
     @Autowired
@@ -55,7 +56,7 @@ public class RiderControllerTest {
     @BeforeEach
     void setUp() {
         rider = new Rider("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 259070137, "938349547",
-        "josetrigo@ua.pt", "motorcycle", "00-AB-99");
+                "josetrigo@ua.pt", "motorcycle", "00-AB-99");        
     }
 
     // Register tests
@@ -136,9 +137,23 @@ public class RiderControllerTest {
         when(riderRepository.save(rider)).thenReturn(rider);
 
         mvc.perform(MockMvcRequestBuilders
+                .post("/v1/riders/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                        "{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"\", \"email\": \"\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+
+        Mockito.verify(riderRepository, VerificationModeFactory.times(0)).save(Mockito.any(Rider.class));
+    }
+    
+    @Test
+    void testInvalidPassword_thenBadRequest() throws Exception {
+        when(riderRepository.save(rider)).thenReturn(rider);
+
+        mvc.perform(MockMvcRequestBuilders
         .post("/v1/riders/register")
         .contentType(MediaType.APPLICATION_JSON)
-        .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"\", \"email\": \"\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
+        .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
         )
         .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
