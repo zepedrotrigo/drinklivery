@@ -42,7 +42,7 @@ import java.util.logging.Level;
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ProductRepositoryTests {
-    /*@Container
+    @Container
 	public static MySQLContainer<?> mySqlDB = new MySQLContainer<>
 			("mysql:5.7.37")
 			.withDatabaseName("drinklivery")
@@ -56,7 +56,7 @@ public class ProductRepositoryTests {
 		registry.add("spring.datasource.username", mySqlDB::getUsername);
 		registry.add("spring.datasource.password", mySqlDB::getPassword);
 
-	};*/
+	};
 
     private String email1 = "Vinho do Dão";
     private String email2 = "Vinho do Porto";
