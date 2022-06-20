@@ -30,6 +30,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import org.assertj.core.api.Assertions;
 
+import java.util.logging.Logger;
+
+import java.util.logging.Level;
+
 
 @DataJpaTest
 @Testcontainers
@@ -39,11 +43,16 @@ public class UserRepositoryTests {
     @Autowired
     private UserRepository uRep;
 
-    /*@Test
+    Logger logger
+            = Logger.getLogger(
+                UserRepositoryTests.class.getName());
+
+    @Test
     @Order(1)
     public void saveUserTest(){
 
-        User u = new User("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 259070137, "938349547", "josetrigo@ua.pt");
+        User u = new User("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 
+        259070137, "938349547", "josetrigo2@ua.pt");
 
         uRep.save(u);
 
@@ -53,13 +62,13 @@ public class UserRepositoryTests {
     @Test
     @Order(2)
     public void getUser_Test(){
-
-        User u = uRep.findById(1L).get();
-
-        Assertions.assertThat(u.getId()).isEqualTo(1L);
+        
+        User u2 = uRep.findByEmail("josetrigo2@ua.pt");
+        
+        Assertions.assertThat(u2.getId()).isEqualTo(uRep.findByEmail("josetrigo2@ua.pt").getId());
     }
 
-    /*@Test
+    @Test
     @Order(3)
     public void getListOfUsers_Test(){
 
@@ -72,20 +81,24 @@ public class UserRepositoryTests {
     @Order(4)
     public void updateUser_Test(){
 
-        User u = uRep.findById(1L).get();
+        //User u = uRep.findByEmail("josetrigo2@ua.pt");
 
-        u.setEmail("renatoaldias12@ua.pt");
+        
+        //System.out.println(u.toString());
+     
 
-        User uUpdated = uRep.save(u);
+        User uUpdated =  uRep.findByEmail("josetrigo2@ua.pt");
+        uUpdated.setEmail("renatoaldias12@ua.pt");
+        uRep.saveAndFlush(uUpdated);
 
         Assertions.assertThat(uUpdated.getEmail()).isEqualTo("renatoaldias12@ua.pt");
     }
 
-    /*@Test
+    @Test
     @Order(5)
     public void deleteUser_Test(){
 
-        User u = uRep.findById(1L).get();
+        User u = uRep.findByEmail("renatoaldias12@ua.pt");
 
         uRep.delete(u);
 
@@ -93,12 +106,10 @@ public class UserRepositoryTests {
 
         User u1 = uRep.findByEmail("renatoaldias12@ua.pt");;
 
-        //Optional<User> optionalUser = uRep.findByEmail("renatoaldias12@ua.pt");
+       
 
-        /*if(optionalUser.isPresent()){
-            u1 = optionalUser.get();
-        }
+        
 
         Assertions.assertThat(u1).isNull();
-    }*/
+    }
 }
