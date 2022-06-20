@@ -17,6 +17,12 @@ class WineryController {
 
     @PostMapping("/v1/wineries/register")
     public ResponseEntity<Winery> registerWinery(@RequestBody Winery winery) {
+        if (winery.getPassword().length() < 8 || winery.getEmail() == null || winery.getEmail().equals("")
+                || winery.getName() == null || winery.getName().equals("")
+                || winery.getAddress() == null || winery.getAddress().equals("")
+                || winery.getNif() == 0 || winery.getPhone() == null || winery.getPhone().equals(""))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    
         wineryRepository.save(winery);
         return new ResponseEntity<>(winery, HttpStatus.CREATED);
     }
