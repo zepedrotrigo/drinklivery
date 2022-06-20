@@ -38,15 +38,25 @@ services:
         ipv4_address: 172.18.0.4
     stdin_open: true
 
-  api-spring:
+  services-api:
     build:
-      context: ./api
+      context: ./services_api
       dockerfile: Dockerfile
     volumes:
-      - './api:/api'
+      - './services_api:/services_api'
     networks:
       my-network:
         ipv4_address: 172.18.0.5
+
+  user-app-api:
+    build:
+      context: ./user_app_api
+      dockerfile: Dockerfile
+    volumes:
+      - './user_app_api:/user_app_api'
+    networks:
+      my-network:
+        ipv4_address: 172.18.0.8
 
   db:
     image: mysql:8.0.28
@@ -70,7 +80,7 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8081:8080
+      - 8080:8080
     depends_on:
       - db
     networks:
