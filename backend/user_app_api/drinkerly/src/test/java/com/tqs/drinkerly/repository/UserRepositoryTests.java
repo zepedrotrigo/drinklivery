@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.*;
+import org.testcontainers.containers.MySQLContainer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -33,6 +34,7 @@ import org.assertj.core.api.Assertions;
 import java.util.logging.Logger;
 
 import java.util.logging.Level;
+import org.junit.jupiter.api.BeforeEach;
 
 //a comment
 @DataJpaTest
@@ -40,21 +42,43 @@ import java.util.logging.Level;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class UserRepositoryTests {
 
+    @Container
+	public static MySQLContainer<?> mySqlDB = new MySQLContainer<>
+			("mysql:5.7.37")
+			.withDatabaseName("drinklivery")
+			.withUsername("user")
+			.withPassword("password");
+
+
+	@DynamicPropertySource
+	public static void properties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url",mySqlDB::getJdbcUrl);
+		registry.add("spring.datasource.username", mySqlDB::getUsername);
+		registry.add("spring.datasource.password", mySqlDB::getPassword);
+
+	}
+
+
     @Autowired
     private UserRepository uRep;
 
-    Logger logger
-            = Logger.getLogger(
-                UserRepositoryTests.class.getName());
+    private String email1 = "josetrigo2@ua.pt";
+    private String email2 = "josefina2@ua.pt";
+    private String email3 = "renatoaldias12@ua.pt";
+   
 
     @Test
     @Order(1)
     public void saveUserTest(){
 
         User u = new User("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 
-        259070137, "938349547", "josetrigo2@ua.pt");
-
+        259070137, "938349557", email1);
         uRep.save(u);
+
+
+        User u2 = new User("Josefina", "Marta", "testingpassword1234", "Campus de Santiago2", 21, 
+        259070139, "938349547", email2);
+        uRep.save(u2);
 
         Assertions.assertThat(u.getId()).isGreaterThan(0);
     }
@@ -63,9 +87,9 @@ public class UserRepositoryTests {
     @Order(2)
     public void getUser_Test(){
         
-        User u2 = uRep.findByEmail("josetrigo2@ua.pt");
+        User u3 = uRep.findByEmail( email1);
         
-        Assertions.assertThat(u2.getId()).isEqualTo(uRep.findByEmail("josetrigo2@ua.pt").getId());
+        Assertions.assertThat(u3.getId()).isEqualTo(uRep.findByEmail( email1).getId());
     }
 
     @Test
@@ -81,34 +105,27 @@ public class UserRepositoryTests {
     @Order(4)
     public void updateUser_Test(){
 
-        //User u = uRep.findByEmail("josetrigo2@ua.pt");
-
-        
-        //System.out.println(u.toString());
+        if (uRep.findByEmail(email3) != null){
+            uRep.delete(uRep.findByEmail(email3));
+        }
      
 
-        User uUpdated =  uRep.findByEmail("josetrigo2@ua.pt");
-        uUpdated.setEmail("renatoaldias12@ua.pt");
+        User uUpdated =  uRep.findByEmail( email1);
+        uUpdated.setEmail(email3);
         uRep.saveAndFlush(uUpdated);
 
-        Assertions.assertThat(uUpdated.getEmail()).isEqualTo("renatoaldias12@ua.pt");
+        Assertions.assertThat(uUpdated.getEmail()).isEqualTo(email3);
     }
 
     @Test
     @Order(5)
     public void deleteUser_Test(){
 
-        User u = uRep.findByEmail("renatoaldias12@ua.pt");
+        User u = uRep.findByEmail(email2);
 
         uRep.delete(u);
 
-        //uRep.deleteById(1L);
-
-        User u1 = uRep.findByEmail("renatoaldias12@ua.pt");;
-
-       
-
-        
+        User u1 = uRep.findByEmail(email2);;
 
         Assertions.assertThat(u1).isNull();
     }
