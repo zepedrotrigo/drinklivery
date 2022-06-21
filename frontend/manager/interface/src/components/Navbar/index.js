@@ -16,7 +16,7 @@ const NavBar = () => {
                 <NavLink to="/" className={({ isActive }) => { return (isActive ? active : link) }}>
                     Riders List
                 </NavLink>
-                <NavLink to="/add-rider" className={({ isActive }) => { return (isActive ? active : link) }}>
+                <NavLink id="addRiderLink" to="/add-rider" className={({ isActive }) => { return (isActive ? active : link) }}>
                     Add Rider
                 </NavLink>
         </div>
