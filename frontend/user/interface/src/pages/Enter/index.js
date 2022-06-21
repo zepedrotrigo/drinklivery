@@ -187,7 +187,7 @@ const Enter = () => {
                     {notFoundError && <p className="text-xs pl-4 py-1 text-primary-tint-6">* User not found!</p>}
                     {loginError && <p className="text-xs pl-4 py-1 text-primary-tint-6">* Invalid credentials!</p>}
                     <div className="flex justify-around mt-16">
-                        <button id="enterBtn" className="bg-primary-shade-1 text-white py-2 self-center rounded-full px-8 active:scale-95" onClick={loginUser}>Login</button>
+                        <button id="loginBtn" className="bg-primary-shade-1 text-white py-2 self-center rounded-full px-8 active:scale-95" onClick={loginUser}>Login</button>
 
 
                     </div>
