@@ -1,24 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
 
+import { Routes, Route } from 'react-router';
+import { useSelector } from 'react-redux';
+import Login from './pages/Login';
+import Home from './pages/Home';
+
 function App() {
+
+  const isLogged = useSelector(state => state.isLogged);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Routes>
+      <Route path="/" element={isLogged ? <Home/>: <Login/>}></Route>
+    </Routes>
+    </>
   );
 }
 
