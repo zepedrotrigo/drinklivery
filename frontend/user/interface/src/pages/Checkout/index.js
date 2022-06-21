@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 
@@ -9,6 +10,8 @@ const Checkout = () => {
   const [emptyCart, setEmptyCart] = useState(false);
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const navigate = useNavigate();
 
   const user = useSelector(state => state.user);
 
@@ -52,7 +55,7 @@ const Checkout = () => {
       .then(response => {
         console.log(response);
         localStorage.removeItem("cart");
-        setFetched(false);
+        navigate("/");
       })
       .catch(err => {
         console.log(err)
@@ -70,7 +73,7 @@ const Checkout = () => {
           <p className="text-xl font-medium mt-4">Total Price: <span className="ml-3 font-normal">{totalPrice}€</span></p>
           <p className="text-xl font-medium mt-1">Payment: <span className="ml-3 font-normal">Card</span></p>
           <p className="text-xl font-medium mt-1">Delivery: <span className="ml-3 font-normal">Your Home</span></p>
-          <button className="bg-primary-shade-6 px-4 py-2 text-white rounded-xl text-xl self-end" onClick={processBuy}>Buy!</button>
+          <button id="checkoutBuyBtn" className="bg-primary-shade-6 px-4 py-2 text-white rounded-xl text-xl self-end" onClick={processBuy}>Buy!</button>
         </>
       }
     </div>
