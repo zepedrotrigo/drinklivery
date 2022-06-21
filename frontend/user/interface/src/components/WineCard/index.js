@@ -53,7 +53,7 @@ const WineCard = (props) => {
             </div>
             <div className="flex flex-col justify-between ml-20 mt-14">
                 <div>
-                    <p className="text-3xl font-bold">Vinho del Puerto <span className="font-normal">,</span> <span className="font-normal ml-4"> 0.75 L</span></p>
+                    <p className="text-3xl font-bold">{props.wine.name} <span className="font-normal">,</span> <span className="font-normal ml-4"> 0.75 L</span></p>
                     <p className="mt-2 text-base text-semibold">From <span className="ml-2">{props.wine.winery}</span></p>
                     <p className="mt-8 text-xl text-semibold">Alcoholic Volume:<span className="ml-2">{props.wine.alcoholicVolume}%</span></p>
                     <p className="mt-2 text-xl text-semibold">Type:<span className="ml-2">{props.wine.type}</span></p>
