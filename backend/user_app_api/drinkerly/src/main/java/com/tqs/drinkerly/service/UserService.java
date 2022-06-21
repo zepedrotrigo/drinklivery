@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.tqs.drinkerly.model.User;
 import com.tqs.drinkerly.repository.UserRepository;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -40,7 +41,8 @@ public class UserService {
 
     public User updateUserFirstNameById(long id, String firstName) {
 
-		User user = userRepository.findById(id).get();
+		Optional<User> OpUser = userRepository.findById(id);
+		User user = OpUser.get();
 				
 		if (user.getFirstName() != null) {
 			user.setFirstName(firstName);
