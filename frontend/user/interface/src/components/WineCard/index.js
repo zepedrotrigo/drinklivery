@@ -13,8 +13,8 @@ const WineCard = (props) => {
 
     let stars = new Array(5);
     for (let index = 0; index < stars.length; index++) {
-        if (index < Math.round(props.wine.ratingScore)) stars[index] = <IoStar className="mx-0.5"></IoStar>
-        else stars[index] = <IoStarOutline className="mx-0.5"></IoStarOutline>
+        if (index < Math.round(props.wine.ratingScore)) stars[index] = <IoStar key={index} className="mx-0.5"></IoStar>
+        else stars[index] = <IoStarOutline key={index} className="mx-0.5"></IoStarOutline>
     }
 
 
@@ -23,6 +23,14 @@ const WineCard = (props) => {
             wine, quantity
         }
         dispatch(addToCart(item));
+        if(localStorage.getItem("cart")){
+            let tempCart = JSON.parse(localStorage.getItem("cart"));
+            localStorage.setItem("cart", JSON.stringify([...tempCart, item]));
+        }
+        else {
+            localStorage.setItem("cart", JSON.stringify([item]));
+
+        }
         setItemAdded(true);
         setTimeout(()=>setAnimation("fade-out"), 1000);
         setTimeout(()=>setItemAdded(false), 1300);
