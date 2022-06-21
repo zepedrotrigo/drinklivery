@@ -14,6 +14,8 @@ const AddRider = () => {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [confirmError, setConfirmError] = useState(false);
+    const [createdRider, setCreatedRider] = useState(false);
+
 
 
     const verifyRegisterFields = () => {
@@ -89,6 +91,7 @@ const AddRider = () => {
         setAddressError(false);
         setPhoneError(false);
         setNifError(false);
+        setCreatedRider(false);
     }
 
     const registerUser = () => {
@@ -118,7 +121,7 @@ const AddRider = () => {
 
             axios.post(`/riders/register`, user, options)
                 .then(response => {
-                    console.log(response);
+                    setCreatedRider(true);                    
                 })
                 .catch(err => {
                     console.log(err)
@@ -208,7 +211,10 @@ const AddRider = () => {
                 </div>
                 {confirmError && <p className=" text-xs self-start ml-4 mt-1 text-red-700">* Please enter a valid first name!</p>}
 
-                <button className="rounded-full bg-black text-white py-2 px-4 mt-8 active:scale-95 transform ease-linear" onClick={registerUser}>Add Rider</button>
+                <button id="riderAddBtn" className="rounded-full bg-black text-white py-2 px-4 mt-8 active:scale-95 transform ease-linear" onClick={registerUser}>Add Rider</button>
+
+                {createdRider && <p className=" text-center self-start mt-4 text-green-700">Rider added successfully!</p>}
+
             </div>
 
         </div>

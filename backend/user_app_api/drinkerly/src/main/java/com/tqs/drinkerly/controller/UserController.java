@@ -60,43 +60,43 @@ class UserController {
 	}
 
     @PutMapping("/firstName/{id}")
-    public User updateUserFirstNameById(@PathVariable(value = "id") long id,  @RequestParam String firstName) {
-		return userService.updateUserFirstNameById(id, firstName);
+    public User updateUserFirstNameById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String> firstName) {
+		return userService.updateUserFirstNameById(id, firstName.get("firstName"));
 	}
 
     @PutMapping("/lastName/{id}")
-    public User updateUserLastNameById(@PathVariable(value = "id") long id,  @RequestParam String lastName) {
-		return userService.updateUserLastNameById(id, lastName);
+    public User updateUserLastNameById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String> lastName) {
+		return userService.updateUserLastNameById(id, lastName.get("lastName"));
 	}
 
     @PutMapping("/password/{id}")
-    public User updateUserPasswordById(@PathVariable(value = "id") long id,  @RequestParam String password) {
-		return userService.updateUserPasswordById(id, password);
+    public User updateUserPasswordById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String> password) {
+		return userService.updateUserPasswordById(id, password.get("password"));
 	}
 
     @PutMapping("/email/{id}")
-    public User updateUserEmailById(@PathVariable(value = "id") long id,  @RequestParam String email) {
-		return userService.updateUserEmailById(id, email);
+    public User updateUserEmailById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String> email) {
+		return userService.updateUserEmailById(id, email.get("email"));
 	}
 
     @PutMapping("/address/{id}")
-    public User updateUserAddressById(@PathVariable(value = "id") long id,  @RequestParam String address) {
-		return userService.updateUserAddressById(id, address);
+    public User updateUserAddressById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String> address) {
+		return userService.updateUserAddressById(id, address.get("address"));
 	}
 
     @PutMapping("/phone/{id}")
-    public User updateUserPhoneById(@PathVariable(value = "id") long id,  @RequestParam String phone) {
-		return userService.updateUserPhoneById(id, phone);
+    public User updateUserPhoneById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String> phone) {
+		return userService.updateUserPhoneById(id, phone.get("phone"));
 	}
 
     @PutMapping("/age/{id}")
-    public User updateUserAgeById(@PathVariable(value = "id") long id,  @RequestParam int age) {
-		return userService.updateUserAgeById(id, age);
+    public User updateUserAgeById(@PathVariable(value = "id") long id,  @RequestBody Map<String,Integer> age) {
+		return userService.updateUserAgeById(id, age.get("age"));
 	}
 
     @PutMapping("/nif/{id}")
-    public User updateUserNifById(@PathVariable(value = "id") long id,  @RequestParam int nif) {
-		return userService.updateUserNifById(id, nif);
+    public User updateUserNifById(@PathVariable(value = "id") long id,  @RequestBody Map<String,Integer> nif) {
+		return userService.updateUserNifById(id, nif.get("nif"));
 	}
 }
  

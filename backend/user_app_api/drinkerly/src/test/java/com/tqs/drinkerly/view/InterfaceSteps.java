@@ -10,6 +10,7 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.hamcrest.CoreMatchers;
@@ -24,13 +25,12 @@ public class InterfaceSteps {
     private Random rand;
     private String rng;
 
-    // Test User Register in App Scenario
+    // Test User Register in App Scenario Steps
 
     @When("I load the webpage {string}")
     public void loadWebPage(String url) {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        System.out.println("\n\n\n\nURL:" + url + "\n\n\n");
         driver.get(url);
     }
 
@@ -55,14 +55,39 @@ public class InterfaceSteps {
         driver.findElement(By.id("registerConfirmPassword")).sendKeys("testingpassword123");
     }
 
-    @And("I click the Register button")
-    public void clickSignUpButton() {
-        driver.findElement(By.id("registerBtn")).click();
+    @And("I click the {string} button")
+    public void andClickButton(String s) {
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        }
+        catch (Exception e) {
+            System.out.println("Oops! Something went wrong!");
+        }
+        driver.findElement(By.id(s+"Btn")).click();
     }
 
     @Then("a green confirmation text shows I registered succesfully")
     public void ConfirmRSignUp() {
         assertTrue(!driver.findElements(By.id("userCreatedSuccess")).isEmpty());
+    }
+
+    // Login add to cart and checkout steps
+    @And("I fill the login form with my information")
+    public void FillSignInForm() {
+        driver.findElement(By.id("loginEmail")).sendKeys("user.teste@gmail.com");
+        driver.findElement(By.id("loginPassword")).sendKeys("testingpassword123");
+    }
+
+    @Then("I am redirected to the page {string}")
+    public void CheckIfRedirect(String url) {
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        }
+        catch (Exception e) {
+            System.out.println("Oops! Something went wrong!");
+        }
+
+        assertEquals(url, driver.getCurrentUrl());
     }
 
     @After()

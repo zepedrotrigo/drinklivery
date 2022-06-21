@@ -24,13 +24,13 @@ const NavBar = () => {
                 <NavLink to="/" className={({ isActive }) => { return (isActive ? active : link) }}>
                     Home
                 </NavLink>
-                <NavLink to="/wines" className={({ isActive }) => { return (isActive ? active : link) }}>
+                <NavLink id="winesBtn" to="/wines" className={({ isActive }) => { return (isActive ? active : link) }}>
                     Wines
                 </NavLink>
                 {!isLogged ? 
                 <NavLink id="enterBtn" to="/enter" className="border-2 py-2 px-4 rounded-lg hover:bg-white hover:text-dark">Enter</NavLink>
                 :
-                <NavLink to="/profile" className={({ isActive }) => { return (isActive ? active : link) }}>
+                <NavLink id="profileBtn" to="/profile" className={({ isActive }) => { return (isActive ? active : link) }}>
                     Your Profile
                 </NavLink>}
 

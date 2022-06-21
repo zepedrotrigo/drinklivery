@@ -41,7 +41,7 @@ public class RiderService {
 		return ResponseEntity.noContent().build();
 	}
 
-    public Rider updateRiderEmailById(long id, @RequestParam String email) {
+    public Rider updateRiderEmailById(long id, String email) {
 
 		Rider rider = riderRepository.findById(id).get();
 				
@@ -52,14 +52,14 @@ public class RiderService {
 		return riderRepository.save(rider);
 	}
 
-	public Rider updateRiderFirstNameById(long id, @RequestParam String firstName) {
+	public Rider updateRiderFirstNameById(long id,  String firstName) {
 
 		Rider rider = riderRepository.findById(id).get();
 				
 		if (rider.getFirstName() != null) {
 			rider.setFirstName(firstName);
 		}
-
+		System.out.println(riderRepository.save(rider).toString());
 		return riderRepository.save(rider);
 	}
 
@@ -70,7 +70,7 @@ public class RiderService {
 		if (rider.getLastName() != null) {
 			rider.setLastName(lastName);
 		}
-
+		System.out.println(riderRepository.save(rider).toString());
 		return riderRepository.save(rider);
 	}
 
