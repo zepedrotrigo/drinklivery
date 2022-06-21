@@ -216,4 +216,19 @@ public class RiderControllerTest {
 			
 			Mockito.verify(riderService, VerificationModeFactory.times(1)).getAllRiders();
 	}
+
+	@Test
+	void testGetRider() throws Exception {
+			when(riderService.getRiderById(1L)).thenReturn(new Rider());
+
+			mvc.perform(MockMvcRequestBuilders
+			.get("/v1/riders/1")
+			.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(MockMvcResultMatchers.status().isOk());
+			
+			Mockito.verify(riderService, VerificationModeFactory.times(1)).getRiderById(1L);
+	}
+
+	
 }
