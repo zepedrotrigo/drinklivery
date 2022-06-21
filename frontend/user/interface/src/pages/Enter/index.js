@@ -18,6 +18,7 @@ const Enter = () => {
     const [confirmError, setConfirmError] = useState(false);
     const [loginError, setLoginError] = useState(false);
     const [notFoundError, setNotFoundError] = useState(false);
+    const [userCreated, setUserCreated] = useState(false);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -113,6 +114,7 @@ const Enter = () => {
             axios.post(`/users/register`, user, options)
                 .then(response => {
                     console.log(response);
+                    setUserCreated(true);
                 })
                 .catch(err => {
                     console.log(err);
@@ -136,7 +138,7 @@ const Enter = () => {
 
         const user = {
             email: document.getElementById("loginEmail").value,
-            password: sha256(document.getElementById("registerPassword").value).toString(),
+            password: sha256(document.getElementById("loginPassword").value).toString(),
         }
 
         const options = {
@@ -185,7 +187,7 @@ const Enter = () => {
                     {notFoundError && <p className="text-xs pl-4 py-1 text-primary-tint-6">* User not found!</p>}
                     {loginError && <p className="text-xs pl-4 py-1 text-primary-tint-6">* Invalid credentials!</p>}
                     <div className="flex justify-around mt-16">
-                        <button className="bg-primary-shade-1 text-white py-2 self-center rounded-full px-8 active:scale-95" onClick={loginUser}>Login</button>
+                        <button id="enterBtn" className="bg-primary-shade-1 text-white py-2 self-center rounded-full px-8 active:scale-95" onClick={loginUser}>Login</button>
 
 
                     </div>
@@ -253,11 +255,11 @@ const Enter = () => {
                         {confirmError && <p className="text-xs pl-4 py-1 text-primary-tint-6">* Passwords must be the same</p>}
                     </div>
 
+                    
                     <div className="flex justify-around mt-16">
-                        <button className="bg-primary-shade-1 text-white py-2 self-center rounded-full px-8 active:scale-95" onClick={registerUser}>Register</button>
-
-
+                        <button id="registerBtn" className="bg-primary-shade-1 text-white py-2 self-center rounded-full px-8 active:scale-95" onClick={registerUser}>Register</button>
                     </div>
+                    {!userCreated && <p id="userCreatedSuccess" className="text-center py-1 text-green-700 mt-8">User Created Successfully</p>}
                 </div>
             </div>
         </div>
