@@ -29,6 +29,8 @@ public class Winery {
     private String phone;
     @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
+    private String password;
     @Column(nullable = false, unique = true)
     private String website;
 
@@ -40,12 +42,13 @@ public class Winery {
         
     }
 
-    public Winery(String name, String address, int nif, String phone, String email, String website) {
+    public Winery(String name, String address, int nif, String phone, String email, String password, String website) {
         this.nif = nif;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.password = password;
         this.website = website;
     }
 
@@ -91,6 +94,14 @@ public class Winery {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getWebsite() {
