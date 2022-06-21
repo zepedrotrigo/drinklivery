@@ -26,3 +26,31 @@ code {
     margin-right:10%;
   }
 }
+
+.fade-in{
+  animation: fade-in 0.5s ease-in-out ;
+}
+.fade-out{
+  animation: fade-out 0.3s ease-out;
+}
+
+
+
+
+@keyframes fade-in {
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity:1;
+  }
+  to {
+    opacity:0;
+  }
+}

@@ -29,6 +29,9 @@ module.exports = {
             '6':'#6D0A11',
           }
         },
+        'dark':{
+          DEFAULT:'#222'
+        }
       }
     },
   },

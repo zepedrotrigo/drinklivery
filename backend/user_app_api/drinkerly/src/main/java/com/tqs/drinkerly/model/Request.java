@@ -45,9 +45,9 @@ public class Request {
         
     }
 
-    public Request( Rider deliverRider, LocalDateTime now, User user, List<Product> productList) {
+    public Request( Rider deliverRider, User user, List<Product> productList) {
         this.deliverRider = deliverRider;
-        this.now = now;
+        this.now = LocalDateTime.now();
         /*this.user = user;
         this.productList = productList;*/
     }
