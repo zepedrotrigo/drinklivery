@@ -31,20 +31,17 @@ public class RequestService {
         this.riderService = riderService;
     }
 
-    public void saveRequest(List<Product> Products, User user ){
-        List<Rider> Riders = riderService.getAllRiders();
-        Collections.shuffle(Riders);
-        for (Integer i = 0; i < Riders.size(); i ++){
-            if (Riders.get(i).getOccupied() == true){
-                continue;
-            }
-            else {
-                Riders.get(i).setOccupied(true);
-                Riders.get(i).setNumAcceptedDeliveries(Riders.get(i).getNumAcceptedDeliveries()+1);
-                Request req = new Request(Riders.get(i), LocalDateTime.now(), user, Products);
-                save(req);
+    public void saveRequest(Request request){
+        List<Rider> riders = riderService.getAllRiders();
+        Collections.shuffle(riders);
+        for (Integer i = 0; i < riders.size(); i ++){
+            if (!riders.get(i).getOccupied()){
+                riders.get(i).setOccupied(true);
+                riders.get(i).setNumAcceptedDeliveries(riders.get(i).getNumAcceptedDeliveries()+1);
+                request.setDeliverRider(riders.get(i));                
             }
         }
+        save(request);
         
     }
 
