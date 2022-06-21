@@ -43,7 +43,7 @@ import org.springframework.http.MediaType;
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
 
-    private User user;
+    private User user, user2;
 
     @Autowired
     private MockMvc mvc;
@@ -58,6 +58,9 @@ public class UserControllerTest {
     void setUp() {
         user = new User("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 259070137, "938349547",
         "josetrigo@ua.pt");
+
+        user2 = new User("Renato", "Dias", "testingpassword1234", "DETI", 20, 256193649, "925097774",
+				"renatoaldias12@ua.pt");
     }
 
     // Register tests
@@ -210,319 +213,163 @@ public class UserControllerTest {
 
 
     }
-    /*
-    @Test
-	void testGetUserById_InexistentId() throws Exception {
-
-        mvc.perform(MockMvcRequestBuilders
-        .get("/v1/users/0")
-        .contentType(MediaType.APPLICATION_JSON)
-        )
-        .andExpect(status().isNotFound());
-
-
-    }
-
+    
     @Test
 	void testDeleteUserById_existentId() throws Exception {
 
-		when(userService.getUserById(user.getId())).thenReturn(user);
+	when(userService.deleteUserById(user.getId())).thenReturn(ResponseEntity.noContent().build());
 
-		mvc.perform(MockMvcRequestBuilders
-        .delete("/v1/users/" + user.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        )
+	mvc.perform(MockMvcRequestBuilders
+                .delete("/v1/users/" + user.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                )
 		.andExpect(status().isNoContent());
 	}
 
-	@Test
-	void testDeleteUserById_inexistentId() throws Exception {
-
-		mvc.perform(MockMvcRequestBuilders
-        .delete("/v1/users/0")
-        .contentType(MediaType.APPLICATION_JSON)
-        )
-		.andExpect(status().isNotFound());
-	}
-
-    @Test
-	void testUpdateUserFirstNameById_userDoesNotExist() throws Exception {
-
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/firstName/0")
-        .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
+	
+   
 
     @Test
 	void testUpdateUserFirstNameById_completeUpdate() throws Exception {
 
-		when(userService.getUserById(user.getId())).thenReturn(user);
+        when(userService.updateUserFirstNameById(user.getId(), "Renato")).thenReturn(user2);
 
-		user.setFirstName("Renato");
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/firstName/" + user.getId())
-        .content("{\"firstName\": \"Renato\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\"}")
-        .contentType(MediaType.APPLICATION_JSON)
-		)
-        .andExpect(status().isOk())
-		.andExpect(jsonPath("firstName", is(user.getFirstName())))
-		.andExpect(jsonPath("lastName", is(user.getLastName())))
-        .andExpect(jsonPath("password", is(user.getPassword())))
-        .andExpect(jsonPath("address", is(user.getAddress())))
-		.andExpect(jsonPath("age", is(user.getAge())))
-		.andExpect(jsonPath("nif", is(user.getNif())))
-		.andExpect(jsonPath("phone", is(user.getPhone())))
-        .andExpect(jsonPath("email", is(user.getEmail())));
+        mvc.perform(MockMvcRequestBuilders
+                    .put("/v1/users/firstName/" + user.getId())
+                    .content("{\"firstName\":\"Renato\"}")
+                    .contentType(MediaType.APPLICATION_JSON)
+            )
+                    .andExpect(status().isOk())
+                    .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.firstName", is(user2.getFirstName())));
 	}
 
-    @Test
-	void testUpdateUserLastNameById_userDoesNotExist() throws Exception {
+   
 
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/lastName/0")
-        .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
-
-    @Test
+        @Test
 	void testUpdateUserLastNameById_completeUpdate() throws Exception {
 
-		when(userService.getUserById(user.getId())).thenReturn(user);
+		when(userService.updateUserLastNameById(user.getId(), "Dias")).thenReturn(user2);
 
-		user.setLastName("Dias");
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/lastName/" + user.getId())
-        .content("{\"firstName\": \"José\", \"lastName\": \"Dias\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\"}")
-        .contentType(MediaType.APPLICATION_JSON)
+	mvc.perform(MockMvcRequestBuilders
+                .put("/v1/users/lastName/" + user.getId())
+                .content("{\"lastName\":\"Dias\"}")
+                .contentType(MediaType.APPLICATION_JSON)
 		)
-        .andExpect(status().isOk())
-		.andExpect(jsonPath("firstName", is(user.getFirstName())))
-		.andExpect(jsonPath("lastName", is(user.getLastName())))
-        .andExpect(jsonPath("password", is(user.getPassword())))
-        .andExpect(jsonPath("address", is(user.getAddress())))
-		.andExpect(jsonPath("age", is(user.getAge())))
-		.andExpect(jsonPath("nif", is(user.getNif())))
-		.andExpect(jsonPath("phone", is(user.getPhone())))
-        .andExpect(jsonPath("email", is(user.getEmail())));
+                .andExpect(status().isOk())
+				.andDo(MockMvcResultHandlers.print())
+	        .andExpect(jsonPath("$.lastName", is(user2.getLastName())));
 	}
 
-    @Test
-	void testUpdateUserPasswordById_userDoesNotExist() throws Exception {
 
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/password/0")
-        .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
-
-    @Test
+        @Test
 	void testUpdateUserPasswordById_completeUpdate() throws Exception {
 
-		when(userService.getUserById(user.getId())).thenReturn(user);
+		when(userService.updateUserPasswordById(user.getId(), "testingpassword1234")).thenReturn(user2);
 
-		user.setPassword("testingpassword1234");
 
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/password/" + user.getId())
-        .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword1234\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\"}")
-        .contentType(MediaType.APPLICATION_JSON)
+
+	mvc.perform(MockMvcRequestBuilders
+                .put("/v1/users/password/" + user.getId())
+                .content("{\"password\":\"testingpassword1234\"}")
+                .contentType(MediaType.APPLICATION_JSON)
 		)
-        .andExpect(status().isOk())
-		.andExpect(jsonPath("firstName", is(user.getFirstName())))
-		.andExpect(jsonPath("lastName", is(user.getLastName())))
-        .andExpect(jsonPath("password", is(user.getPassword())))
-        .andExpect(jsonPath("address", is(user.getAddress())))
-		.andExpect(jsonPath("age", is(user.getAge())))
-		.andExpect(jsonPath("nif", is(user.getNif())))
-		.andExpect(jsonPath("phone", is(user.getPhone())))
-        .andExpect(jsonPath("email", is(user.getEmail())));
+                .andExpect(status().isOk())
+				.andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("password", is(user2.getPassword())));
+                
 	}
 
-    @Test
-	void testUpdateUserAddressById_userDoesNotExist() throws Exception {
+       
 
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/address/0")
-        .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
-
-    @Test
+        @Test
 	void testUpdateUserAddressById_completeUpdate() throws Exception {
 
-		when(userService.getUserById(user.getId())).thenReturn(user);
+		when(userService.updateUserAddressById(user.getId(), "DETI")).thenReturn(user2);
+	
 
-		user.setAddress("DETI");
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/address/" + user.getId())
-        .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"DETI\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\"}")
-        .contentType(MediaType.APPLICATION_JSON)
+	mvc.perform(MockMvcRequestBuilders
+                .put("/v1/users/address/" + user.getId())
+                .content("{\"address\":\"DETI\"}")
+                .contentType(MediaType.APPLICATION_JSON)
 		)
-        .andExpect(status().isOk())
-		.andExpect(jsonPath("firstName", is(user.getFirstName())))
-		.andExpect(jsonPath("lastName", is(user.getLastName())))
-        .andExpect(jsonPath("password", is(user.getPassword())))
-        .andExpect(jsonPath("address", is(user.getAddress())))
-		.andExpect(jsonPath("age", is(user.getAge())))
-		.andExpect(jsonPath("nif", is(user.getNif())))
-		.andExpect(jsonPath("phone", is(user.getPhone())))
-        .andExpect(jsonPath("email", is(user.getEmail())));
+                .andExpect(status().isOk())
+				.andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("address", is(user2.getAddress())));
+	        
 	}
 
-    @Test
-	void testUpdateUserAgeById_userDoesNotExist() throws Exception {
+       
 
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/age/0")
-        .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
-
-    @Test
+        @Test
 	void testUpdateUserAgeById_completeUpdate() throws Exception {
 
-		when(userService.getUserById(user.getId())).thenReturn(user);
+		when(userService.updateUserAgeById(user.getId(), 20)).thenReturn(user2);
 
-		user.setAge(20);
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/age/" + user.getId())
-        .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"20\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\"}")
-        .contentType(MediaType.APPLICATION_JSON)
+	mvc.perform(MockMvcRequestBuilders
+                .put("/v1/users/age/" + user.getId())
+                .content("{\"age\":\"20\"}")
+                .contentType(MediaType.APPLICATION_JSON)
 		)
-        .andExpect(status().isOk())
-		.andExpect(jsonPath("firstName", is(user.getFirstName())))
-		.andExpect(jsonPath("lastName", is(user.getLastName())))
-        .andExpect(jsonPath("password", is(user.getPassword())))
-        .andExpect(jsonPath("address", is(user.getAddress())))
-		.andExpect(jsonPath("age", is(user.getAge())))
-		.andExpect(jsonPath("nif", is(user.getNif())))
-		.andExpect(jsonPath("phone", is(user.getPhone())))
-        .andExpect(jsonPath("email", is(user.getEmail())));
+                .andExpect(status().isOk()) 
+				.andDo(MockMvcResultHandlers.print()) 
+	        .andExpect(jsonPath("age", is(user2.getAge())));
+	       
 	}
 
-    @Test
-	void testUpdateUserNifById_userDoesNotExist() throws Exception {
+       
 
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/nif/0")
-        .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
-
-    @Test
+        @Test
 	void testUpdateUserNifById_completeUpdate() throws Exception {
 
-		when(userService.getUserById(user.getId())).thenReturn(user);
+		when(userService.updateUserNifById(user.getId(), 256193649)).thenReturn(user2);
 
-		user.setNif(256193649);
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/nif/" + user.getId())
-        .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"256193649\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\"}")
-        .contentType(MediaType.APPLICATION_JSON)
+	mvc.perform(MockMvcRequestBuilders
+                .put("/v1/users/nif/" + user.getId())
+                .content("{\"nif\":\"256193649\"}")
+                .contentType(MediaType.APPLICATION_JSON)
 		)
-        .andExpect(status().isOk())
-		.andExpect(jsonPath("firstName", is(user.getFirstName())))
-		.andExpect(jsonPath("lastName", is(user.getLastName())))
-        .andExpect(jsonPath("password", is(user.getPassword())))
-        .andExpect(jsonPath("address", is(user.getAddress())))
-		.andExpect(jsonPath("age", is(user.getAge())))
-		.andExpect(jsonPath("nif", is(user.getNif())))
-		.andExpect(jsonPath("phone", is(user.getPhone())))
-        .andExpect(jsonPath("email", is(user.getEmail())));
+                .andExpect(status().isOk()) 
+				.andDo(MockMvcResultHandlers.print())
+	        .andExpect(jsonPath("nif", is(user2.getNif())));
+	       
 	}
 
-    @Test
-	void testUpdateUserPhoneById_userDoesNotExist() throws Exception {
+       
 
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/phone/0")
-        .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
-
-    @Test
+        @Test
 	void testUpdateUserPhoneById_completeUpdate() throws Exception {
 
-		when(userService.getUserById(user.getId())).thenReturn(user);
+		when(userService.updateUserPhoneById(user.getId(), "925097774")).thenReturn(user2);
 
-		user.setPhone("925097774");
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/phone/" + user.getId())
-        .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"925097774\", \"email\": \"josetrigo@ua.pt\"}")
-        .contentType(MediaType.APPLICATION_JSON)
+	mvc.perform(MockMvcRequestBuilders
+                .put("/v1/users/phone/" + user.getId())
+                .content("{\"phone\":\"925097774\"}")
+                .contentType(MediaType.APPLICATION_JSON)
 		)
-        .andExpect(status().isOk())
-		.andExpect(jsonPath("firstName", is(user.getFirstName())))
-		.andExpect(jsonPath("lastName", is(user.getLastName())))
-        .andExpect(jsonPath("password", is(user.getPassword())))
-        .andExpect(jsonPath("address", is(user.getAddress())))
-		.andExpect(jsonPath("age", is(user.getAge())))
-		.andExpect(jsonPath("nif", is(user.getNif())))
-		.andExpect(jsonPath("phone", is(user.getPhone())))
-        .andExpect(jsonPath("email", is(user.getEmail())));
+                .andExpect(status().isOk())
+				.andDo(MockMvcResultHandlers.print())
+	        .andExpect(jsonPath("phone", is(user2.getPhone())));
+               
 	}
 
-    @Test
-	void testUpdateUserEmailById_userDoesNotExist() throws Exception {
+      
 
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/email/0")
-        .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
-
-    @Test
+        @Test
 	void testUpdateUserEmailById_completeUpdate() throws Exception {
 
-		when(userService.getUserById(user.getId())).thenReturn(user);
+		when(userService.updateUserEmailById(user.getId(), "renatoaldias12@ua.pt")).thenReturn(user2);
 
-		user.setEmail("renatoaldias12@ua.pt");
 
-		mvc.perform(MockMvcRequestBuilders
-        .put("/v1/users/email/" + user.getId())
-        .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"renatoaldias12@ua.pt\"}")
-        .contentType(MediaType.APPLICATION_JSON)
+	mvc.perform(MockMvcRequestBuilders
+                .put("/v1/users/email/" + user.getId())
+                .content("{\"email\":\"renatoaldias12@ua.pt\"}")
+                .contentType(MediaType.APPLICATION_JSON)
 		)
-        .andExpect(status().isOk())
-		.andExpect(jsonPath("firstName", is(user.getFirstName())))
-		.andExpect(jsonPath("lastName", is(user.getLastName())))
-        .andExpect(jsonPath("password", is(user.getPassword())))
-        .andExpect(jsonPath("address", is(user.getAddress())))
-		.andExpect(jsonPath("age", is(user.getAge())))
-		.andExpect(jsonPath("nif", is(user.getNif())))
-		.andExpect(jsonPath("phone", is(user.getPhone())))
-        .andExpect(jsonPath("email", is(user.getEmail())));
+                .andExpect(status().isOk())
+				.andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("email", is(user2.getEmail())));
+                
 	}
-    */
+
 }

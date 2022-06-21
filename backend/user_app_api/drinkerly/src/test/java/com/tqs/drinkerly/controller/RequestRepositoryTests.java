@@ -1,4 +1,4 @@
-package com.tqs.drinkerly.controller;
+/*package com.tqs.drinkerly.controller;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +42,7 @@ import org.junit.jupiter.api.BeforeEach;
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class RequestRepositoryTests {
-   private Rider deliverRider = new Rider("firstName", "lastName", "password", "address", 22, 222222222,
+   /*private Rider deliverRider = new Rider("firstName", "lastName", "password", "address", 22, 222222222,
       "987654321", "email", "vehicleType", "licensePlate");
    private User user = new User("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 
       259070137, "938349557", "email1");
@@ -82,4 +82,4 @@ public class RequestRepositoryTests {
 
   
 
-}
+}*/

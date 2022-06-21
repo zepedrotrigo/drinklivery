@@ -44,7 +44,7 @@ import org.springframework.http.MediaType;
 @WebMvcTest(RiderController.class)
 public class RiderControllerTest {
 	private String data;
-	private Rider rider;
+	private Rider rider, rider2;
 
 	@Autowired
 	private MockMvc mvc;
@@ -58,7 +58,10 @@ public class RiderControllerTest {
 	@BeforeEach
 	void setUp() {
 		rider = new Rider("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 259070137, "938349547",
-				"josetrigo@ua.pt", "motorcycle", "00-AB-99");        
+				"josetrigo@ua.pt", "motorcycle", "00-AB-99"); 
+				
+		rider2 = new Rider("Renato", "Dias", "testingpassword1234", "DETI", 20, 256193649, "925097774",
+				"renatoaldias12@ua.pt", "car", "08-RD-07");
 	}
 
 	// ----------------- Test Register ----------------------
@@ -254,23 +257,13 @@ public class RiderControllerTest {
 
 
         }
-        /*
-        @Test
-	void testGetRiderById_InexistentId() throws Exception {
-
-        mvc.perform(MockMvcRequestBuilders
-                .get("/v1/riders/0")
-                .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andExpect(status().isNotFound());
-
-
-        }
+       
+    
         
-        @Test
+      @Test
 	void testDeleteRiderById_existentId() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
+	when(riderService.deleteRiderById(rider.getId())).thenReturn(ResponseEntity.noContent().build());
 
 	mvc.perform(MockMvcRequestBuilders
                 .delete("/v1/riders/" + rider.getId())
@@ -279,385 +272,189 @@ public class RiderControllerTest {
 		.andExpect(status().isNoContent());
 	}
 
-	@Test
-	void testDeleteRiderById_inexistentId() throws Exception {
+	
+   
 
-	mvc.perform(MockMvcRequestBuilders
-                .delete("/v1/riders/0")
-                .contentType(MediaType.APPLICATION_JSON)
-                )
-		.andExpect(status().isNotFound());
-	}
-
-        @Test
-	void testUpdateRiderFirstNameById_riderDoesNotExist() throws Exception {
-
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-	mvc.perform(MockMvcRequestBuilders
-                .put("/v1/riders/firstName/0")
-                .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
-
-        @Test
+    @Test
 	void testUpdateRiderFirstNameById_completeUpdate() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
-
-	rider.setFirstName("Renato");
+	when(riderService.updateRiderFirstNameById(rider.getId(), "Renato")).thenReturn(rider2);
 
 	mvc.perform(MockMvcRequestBuilders
                 .put("/v1/riders/firstName/" + rider.getId())
-                .content("{\"firstName\": \"Renato\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
-                .contentType(MediaType.APPLICATION_JSON)
+				.content("{\"firstName\":\"Renato\"}")
+				.contentType(MediaType.APPLICATION_JSON)
 		)
                 .andExpect(status().isOk())
-	        .andExpect(jsonPath("firstName", is(rider.getFirstName())))
-	        .andExpect(jsonPath("lastName", is(rider.getLastName())))
-                .andExpect(jsonPath("password", is(rider.getPassword())))
-                .andExpect(jsonPath("address", is(rider.getAddress())))
-	        .andExpect(jsonPath("age", is(rider.getAge())))
-	        .andExpect(jsonPath("nif", is(rider.getNif())))
-	        .andExpect(jsonPath("phone", is(rider.getPhone())))
-                .andExpect(jsonPath("email", is(rider.getEmail())))
-                .andExpect(jsonPath("vehicleType", is(rider.getVehicleType())))
-                .andExpect(jsonPath("licensePlate", is(rider.getLicensePlate())));
+				//.andDo(MockMvcResultHandlers.print())
+	        .andExpect(jsonPath("$.firstName", is(rider2.getFirstName())));
 	}
 
-        @Test
-	void testUpdateRiderLastNameById_riderDoesNotExist() throws Exception {
-
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-	mvc.perform(MockMvcRequestBuilders
-                .put("/v1/riders/lastName/0")
-                .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
+   
 
         @Test
 	void testUpdateRiderLastNameById_completeUpdate() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
-
-	rider.setLastName("Dias");
+		when(riderService.updateRiderLastNameById(rider.getId(), "Dias")).thenReturn(rider2);
 
 	mvc.perform(MockMvcRequestBuilders
                 .put("/v1/riders/lastName/" + rider.getId())
-                .content("{\"firstName\": \"José\", \"lastName\": \"Dias\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
+                .content("{\"lastName\":\"Dias\"}")
                 .contentType(MediaType.APPLICATION_JSON)
 		)
                 .andExpect(status().isOk())
-	        .andExpect(jsonPath("firstName", is(rider.getFirstName())))
-	        .andExpect(jsonPath("lastName", is(rider.getLastName())))
-                .andExpect(jsonPath("password", is(rider.getPassword())))
-                .andExpect(jsonPath("address", is(rider.getAddress())))
-	        .andExpect(jsonPath("age", is(rider.getAge())))
-	        .andExpect(jsonPath("nif", is(rider.getNif())))
-	        .andExpect(jsonPath("phone", is(rider.getPhone())))
-                .andExpect(jsonPath("email", is(rider.getEmail())))
-                .andExpect(jsonPath("vehicleType", is(rider.getVehicleType())))
-                .andExpect(jsonPath("licensePlate", is(rider.getLicensePlate())));
+				//.andDo(MockMvcResultHandlers.print())
+	        .andExpect(jsonPath("$.lastName", is(rider2.getLastName())));
 	}
 
-        @Test
-	void testUpdateRiderPasswordById_riderDoesNotExist() throws Exception {
 
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-	mvc.perform(MockMvcRequestBuilders
-                .put("/v1/riders/password/0")
-                .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
-
-        @Test
+    @Test
 	void testUpdateRiderPasswordById_completeUpdate() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
+		when(riderService.updateRiderPasswordById(rider.getId(), "testingpassword1234")).thenReturn(rider2);
 
-	rider.setPassword("testingpassword1234");
+
 
 	mvc.perform(MockMvcRequestBuilders
                 .put("/v1/riders/password/" + rider.getId())
-                .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword1234\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
+                .content("{\"password\":\"testingpassword1234\"}")
                 .contentType(MediaType.APPLICATION_JSON)
 		)
                 .andExpect(status().isOk())
-	        .andExpect(jsonPath("firstName", is(rider.getFirstName())))
-	        .andExpect(jsonPath("lastName", is(rider.getLastName())))
-                .andExpect(jsonPath("password", is(rider.getPassword())))
-                .andExpect(jsonPath("address", is(rider.getAddress())))
-	        .andExpect(jsonPath("age", is(rider.getAge())))
-	        .andExpect(jsonPath("nif", is(rider.getNif())))
-	        .andExpect(jsonPath("phone", is(rider.getPhone())))
-                .andExpect(jsonPath("email", is(rider.getEmail())))
-                .andExpect(jsonPath("vehicleType", is(rider.getVehicleType())))
-                .andExpect(jsonPath("licensePlate", is(rider.getLicensePlate())));
+				//.andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("password", is(rider2.getPassword())));
+                
 	}
 
-        @Test
-	void testUpdateRiderAddressById_riderDoesNotExist() throws Exception {
-
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-	mvc.perform(MockMvcRequestBuilders
-                .put("/v1/riders/address/0")
-                .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
+       
 
         @Test
 	void testUpdateRiderAddressById_completeUpdate() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
-
-	rider.setAddress("DETI");
+		when(riderService.updateRiderAddressById(rider.getId(), "DETI")).thenReturn(rider2);
+	
 
 	mvc.perform(MockMvcRequestBuilders
                 .put("/v1/riders/address/" + rider.getId())
-                .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"DETI\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
+                .content("{\"address\":\"DETI\"}")
                 .contentType(MediaType.APPLICATION_JSON)
 		)
                 .andExpect(status().isOk())
-	        .andExpect(jsonPath("firstName", is(rider.getFirstName())))
-	        .andExpect(jsonPath("lastName", is(rider.getLastName())))
-                .andExpect(jsonPath("password", is(rider.getPassword())))
-                .andExpect(jsonPath("address", is(rider.getAddress())))
-	        .andExpect(jsonPath("age", is(rider.getAge())))
-	        .andExpect(jsonPath("nif", is(rider.getNif())))
-	        .andExpect(jsonPath("phone", is(rider.getPhone())))
-                .andExpect(jsonPath("email", is(rider.getEmail())))
-                .andExpect(jsonPath("vehicleType", is(rider.getVehicleType())))
-                .andExpect(jsonPath("licensePlate", is(rider.getLicensePlate())));
+				//.andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("address", is(rider2.getAddress())));
+	        
 	}
 
-        @Test
-	void testUpdateRiderAgeById_riderDoesNotExist() throws Exception {
-
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-	mvc.perform(MockMvcRequestBuilders
-                .put("/v1/riders/age/0")
-                .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
+       
 
         @Test
 	void testUpdateRiderAgeById_completeUpdate() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
-
-	rider.setAge(20);
+		when(riderService.updateRiderAgeById(rider.getId(), 20)).thenReturn(rider2);
 
 	mvc.perform(MockMvcRequestBuilders
                 .put("/v1/riders/age/" + rider.getId())
-                .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"20\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
+                .content("{\"age\":\"20\"}")
                 .contentType(MediaType.APPLICATION_JSON)
 		)
-                .andExpect(status().isOk())
-	        .andExpect(jsonPath("firstName", is(rider.getFirstName())))
-	        .andExpect(jsonPath("lastName", is(rider.getLastName())))
-                .andExpect(jsonPath("password", is(rider.getPassword())))
-                .andExpect(jsonPath("address", is(rider.getAddress())))
-	        .andExpect(jsonPath("age", is(rider.getAge())))
-	        .andExpect(jsonPath("nif", is(rider.getNif())))
-	        .andExpect(jsonPath("phone", is(rider.getPhone())))
-                .andExpect(jsonPath("email", is(rider.getEmail())))
-                .andExpect(jsonPath("vehicleType", is(rider.getVehicleType())))
-                .andExpect(jsonPath("licensePlate", is(rider.getLicensePlate())));
+                .andExpect(status().isOk()) 
+				//.andDo(MockMvcResultHandlers.print()) 
+	        .andExpect(jsonPath("age", is(rider2.getAge())));
+	       
 	}
 
-        @Test
-	void testUpdateRiderNifById_riderDoesNotExist() throws Exception {
-
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-	mvc.perform(MockMvcRequestBuilders
-                .put("/v1/riders/nif/0")
-                .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
+//-----------------------------------------------------------------------------------------------------
+//						NIF     NIF		NIF		NIF   
 
         @Test
 	void testUpdateRiderNifById_completeUpdate() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
-
-	rider.setNif(256193649);
+		when(riderService.updateRiderNifById(rider.getId(), 256193649)).thenReturn(rider2);
 
 	mvc.perform(MockMvcRequestBuilders
                 .put("/v1/riders/nif/" + rider.getId())
-                .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"256193649\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
+                .content("{\"nif\":\"256193649\"}")
                 .contentType(MediaType.APPLICATION_JSON)
 		)
-                .andExpect(status().isOk())
-	        .andExpect(jsonPath("firstName", is(rider.getFirstName())))
-	        .andExpect(jsonPath("lastName", is(rider.getLastName())))
-                .andExpect(jsonPath("password", is(rider.getPassword())))
-                .andExpect(jsonPath("address", is(rider.getAddress())))
-	        .andExpect(jsonPath("age", is(rider.getAge())))
-	        .andExpect(jsonPath("nif", is(rider.getNif())))
-	        .andExpect(jsonPath("phone", is(rider.getPhone())))
-                .andExpect(jsonPath("email", is(rider.getEmail())))
-                .andExpect(jsonPath("vehicleType", is(rider.getVehicleType())))
-                .andExpect(jsonPath("licensePlate", is(rider.getLicensePlate())));
+                .andExpect(status().isOk()) 
+				//.andDo(MockMvcResultHandlers.print())
+	        .andExpect(jsonPath("nif", is(rider2.getNif())));
+	       
 	}
 
-        @Test
-	void testUpdateRiderPhoneById_riderDoesNotExist() throws Exception {
-
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-	mvc.perform(MockMvcRequestBuilders
-                .put("/v1/riders/phone/0")
-                .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
+       
 
         @Test
 	void testUpdateRiderPhoneById_completeUpdate() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
-
-	rider.setPhone("925097774");
+		when(riderService.updateRiderPhoneById(rider.getId(), "925097774")).thenReturn(rider2);
 
 	mvc.perform(MockMvcRequestBuilders
                 .put("/v1/riders/phone/" + rider.getId())
-                .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"925097774\", \"email\": \"josetrigo@ua.pt\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
+                .content("{\"phone\":\"925097774\"}")
                 .contentType(MediaType.APPLICATION_JSON)
 		)
                 .andExpect(status().isOk())
-	        .andExpect(jsonPath("firstName", is(rider.getFirstName())))
-	        .andExpect(jsonPath("lastName", is(rider.getLastName())))
-                .andExpect(jsonPath("password", is(rider.getPassword())))
-                .andExpect(jsonPath("address", is(rider.getAddress())))
-	        .andExpect(jsonPath("age", is(rider.getAge())))
-	        .andExpect(jsonPath("nif", is(rider.getNif())))
-	        .andExpect(jsonPath("phone", is(rider.getPhone())))
-                .andExpect(jsonPath("email", is(rider.getEmail())))
-                .andExpect(jsonPath("vehicleType", is(rider.getVehicleType())))
-                .andExpect(jsonPath("licensePlate", is(rider.getLicensePlate())));
+				//.andDo(MockMvcResultHandlers.print())
+	        .andExpect(jsonPath("phone", is(rider2.getPhone())));
+               
 	}
 
-        @Test
-	void testUpdateRiderEmailById_riderDoesNotExist() throws Exception {
-
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-	mvc.perform(MockMvcRequestBuilders
-                .put("/v1/riders/email/0")
-                .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
+      
 
         @Test
 	void testUpdateRiderEmailById_completeUpdate() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
+		when(riderService.updateRiderEmailById(rider.getId(), "renatoaldias12@ua.pt")).thenReturn(rider2);
 
-	rider.setEmail("renatoaldias12@ua.pt");
 
 	mvc.perform(MockMvcRequestBuilders
                 .put("/v1/riders/email/" + rider.getId())
-                .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"renatoaldias12@ua.pt\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"00-AB-99\"}")
+                .content("{\"email\":\"renatoaldias12@ua.pt\"}")
                 .contentType(MediaType.APPLICATION_JSON)
 		)
                 .andExpect(status().isOk())
-	        .andExpect(jsonPath("firstName", is(rider.getFirstName())))
-	        .andExpect(jsonPath("lastName", is(rider.getLastName())))
-                .andExpect(jsonPath("password", is(rider.getPassword())))
-                .andExpect(jsonPath("address", is(rider.getAddress())))
-	        .andExpect(jsonPath("age", is(rider.getAge())))
-	        .andExpect(jsonPath("nif", is(rider.getNif())))
-	        .andExpect(jsonPath("phone", is(rider.getPhone())))
-                .andExpect(jsonPath("email", is(rider.getEmail())))
-                .andExpect(jsonPath("vehicleType", is(rider.getVehicleType())))
-                .andExpect(jsonPath("licensePlate", is(rider.getLicensePlate())));
+				//.andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("email", is(rider2.getEmail())));
+                
 	}
 
-        @Test
-	void testUpdateRiderVehicleTypeById_riderDoesNotExist() throws Exception {
-
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-	mvc.perform(MockMvcRequestBuilders
-                .put("/v1/riders/vehicleType/0")
-                .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
+       
 
         @Test
 	void testUpdateRiderVehicleTypeById_completeUpdate() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
+		when(riderService.updateRiderVehicleTypeById(rider.getId(), "car")).thenReturn(rider2);
 
-	rider.setVehicleType("car");
 
 	mvc.perform(MockMvcRequestBuilders
                 .put("/v1/riders/vehicleType/" + rider.getId())
-                .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\", \"vehicleType\": \"car\", \"licensePlate\": \"00-AB-99\"}")
+                .content("{\"vehicleType\":\"car\"}")
                 .contentType(MediaType.APPLICATION_JSON)
 		)
                 .andExpect(status().isOk())
-	        .andExpect(jsonPath("firstName", is(rider.getFirstName())))
-	        .andExpect(jsonPath("lastName", is(rider.getLastName())))
-                .andExpect(jsonPath("password", is(rider.getPassword())))
-                .andExpect(jsonPath("address", is(rider.getAddress())))
-	        .andExpect(jsonPath("age", is(rider.getAge())))
-	        .andExpect(jsonPath("nif", is(rider.getNif())))
-	        .andExpect(jsonPath("phone", is(rider.getPhone())))
-                .andExpect(jsonPath("email", is(rider.getEmail())))
-                .andExpect(jsonPath("vehicleType", is(rider.getVehicleType())))
-                .andExpect(jsonPath("licensePlate", is(rider.getLicensePlate())));
+				//.andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("vehicleType", is(rider2.getVehicleType())));
+                
 	}
 
-        @Test
-	void testUpdateRiderLicensePlateById_riderDoesNotExist() throws Exception {
-
-		//String userJsonString = mapper.writeValueAsString(userDTO);
-
-	mvc.perform(MockMvcRequestBuilders
-                .put("/v1/riders/licensePlate/0")
-                .contentType(MediaType.APPLICATION_JSON)
-		)
-		.andExpect(status().isNotFound());
-	}
+      
 
         @Test
 	void testUpdateRiderLicensePlateById_completeUpdate() throws Exception {
 
-	when(riderService.getRiderById(rider.getId())).thenReturn(rider);
+		when(riderService.updateRiderLicensePlateById(rider.getId(), "08-RD-07")).thenReturn(rider2);
 
-	rider.setLicensePlate("08-RD-07");
 
 	mvc.perform(MockMvcRequestBuilders
                 .put("/v1/riders/licensePlate/" + rider.getId())
-                .content("{\"firstName\": \"José\", \"lastName\": \"Trigo\", \"password\": \"testingpassword123\", \"address\": \"Campus de Santiago\", \"age\": \"21\", \"nif\": \"259070137\", \"phone\": \"938349547\", \"email\": \"josetrigo@ua.pt\", \"vehicleType\": \"motorcycle\", \"licensePlate\": \"08-RD-07\"}")
+                .content("{\"licensePlate\":\"08-RD-07\"}")
                 .contentType(MediaType.APPLICATION_JSON)
 		)
                 .andExpect(status().isOk())
-	        .andExpect(jsonPath("firstName", is(rider.getFirstName())))
-	        .andExpect(jsonPath("lastName", is(rider.getLastName())))
-                .andExpect(jsonPath("password", is(rider.getPassword())))
-                .andExpect(jsonPath("address", is(rider.getAddress())))
-	        .andExpect(jsonPath("age", is(rider.getAge())))
-	        .andExpect(jsonPath("nif", is(rider.getNif())))
-	        .andExpect(jsonPath("phone", is(rider.getPhone())))
-                .andExpect(jsonPath("email", is(rider.getEmail())))
-                .andExpect(jsonPath("vehicleType", is(rider.getVehicleType())))
-                .andExpect(jsonPath("licensePlate", is(rider.getLicensePlate())));
+				//.andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("licensePlate", is(rider2.getLicensePlate())));
 	}
-        */
+        
 	
 }

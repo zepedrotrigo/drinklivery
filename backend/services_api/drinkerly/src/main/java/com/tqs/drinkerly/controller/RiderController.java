@@ -70,53 +70,55 @@ class RiderController {
 	}
 
     @PutMapping("/email/{id}")
-    public Rider updateRiderEmailById(@PathVariable(value = "id") long id,  @RequestParam String email) {
-		return riderService.updateRiderEmailById(id, email);
+    public Rider updateRiderEmailById(@PathVariable(value = "id") long id,   @RequestBody Map<String,String> email) {
+		return riderService.updateRiderEmailById(id, email.get("email"));
 	}
 
     @PutMapping("/firstName/{id}")
-    public Rider updateRiderFirstNameById(@PathVariable(value = "id") long id,  @RequestParam String firstName) {
-		return riderService.updateRiderFirstNameById(id, firstName);
+    public Rider updateRiderFirstNameById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String> firstName) {
+    //System.out.println(riderService.updateRiderFirstNameById(id, firstName.get("firstName").toString()));
+   
+		return riderService.updateRiderFirstNameById(id, firstName.get("firstName"));
 	}
 
     @PutMapping("/lastName/{id}")
-    public Rider updateRiderLastNameById(@PathVariable(value = "id") long id,  @RequestParam String lastName) {
-		return riderService.updateRiderLastNameById(id, lastName);
+    public Rider updateRiderLastNameById(@PathVariable(value = "id") long id,   @RequestBody Map<String,String> lastName) {
+		return riderService.updateRiderLastNameById(id, lastName.get("lastName"));
 	}
 
     @PutMapping("/password/{id}")
-    public Rider updateRiderPasswordById(@PathVariable(value = "id") long id,  @RequestParam String password) {
-		return riderService.updateRiderPasswordById(id, password);
+    public Rider updateRiderPasswordById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String> password) {
+		return riderService.updateRiderPasswordById(id, password.get("password"));
 	}
 
     @PutMapping("/phone/{id}")
-    public Rider updateRiderPhoneById(@PathVariable(value = "id") long id,  @RequestParam String phone) {
-		return riderService.updateRiderPhoneById(id, phone);
+    public Rider updateRiderPhoneById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String> phone) {
+		return riderService.updateRiderPhoneById(id, phone.get("phone"));
 	}
 
     @PutMapping("/address/{id}")
-    public Rider updateRiderAddressById(@PathVariable(value = "id") long id,  @RequestParam String address) {
-		return riderService.updateRiderAddressById(id, address);
+    public Rider updateRiderAddressById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String> address) {
+		return riderService.updateRiderAddressById(id, address.get("address"));
 	}
 
     @PutMapping("/age/{id}")
-    public Rider updateRiderAgeById(@PathVariable(value = "id") long id,  @RequestParam int age) {
-		return riderService.updateRiderAgeById(id, age);
+    public Rider updateRiderAgeById(@PathVariable(value = "id") long id,  @RequestBody Map<String,Integer> age) {
+		return riderService.updateRiderAgeById(id, age.get("age"));
 	}
 
     @PutMapping("/nif/{id}")
-    public Rider updateRiderNifById(@PathVariable(value = "id") long id,  @RequestParam int nif) {
-		return riderService.updateRiderNifById(id, nif);
+    public Rider updateRiderNifById(@PathVariable(value = "id") long id,  @RequestBody Map<String,Integer> nif) {
+		return riderService.updateRiderNifById(id, nif.get("nif"));
 	}
 
     @PutMapping("/vehicleType/{id}")
-    public Rider updateRiderVehicleTypeById(@PathVariable(value = "id") long id,  @RequestParam String vehicleType) {
-		return riderService.updateRiderVehicleTypeById(id, vehicleType);
+    public Rider updateRiderVehicleTypeById(@PathVariable(value = "id") long id,  @RequestBody Map<String,String>  vehicleType) {
+		return riderService.updateRiderVehicleTypeById(id, vehicleType.get("vehicleType"));
 	}
 
     @PutMapping("/licensePlate/{id}")
-    public Rider updateRiderLicensePlateById(@PathVariable(value = "id") long id, @RequestParam String licensePlate) {
-      return riderService.updateRiderLicensePlateById(id, licensePlate);
+    public Rider updateRiderLicensePlateById(@PathVariable(value = "id") long id, @RequestBody Map<String,String>  licensePlate) {
+      return riderService.updateRiderLicensePlateById(id, licensePlate.get("licensePlate"));
     }
 }
  

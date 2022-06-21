@@ -71,7 +71,11 @@ public class ProductRepositoryTests {
     @Rollback(false)
     public void saveProductTest(){
 
+<<<<<<< HEAD
+        Winery winery = new Winery("Adega 1", "Lagar Esquerdo", 222222222, "987646321", "wine@email.com", "testingpassword12345", "www.wine.com");
+=======
         Winery winery = new Winery("Adega 1", "Lagar Esquerdo", 222222222, "987646321", "wine@email.com", "testingpassword123", "www.wine.com");
+>>>>>>> 057ef115bcf7524204a2e38f0143c9d662022263
 
         Product p = new Product(email1, "Red", "Portugal", "Dão", "encruzado", 
         "bebe-se", 23.00, 13.52, 24.50, 30.50,
