@@ -7,21 +7,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tqs.drinkerly.model.Rider;
 import com.tqs.drinkerly.repository.RiderRepository;
 import com.tqs.drinkerly.service.RiderService;
 
 @RestController
+@RequestMapping("/v1/riders/")
 class RiderController {
 
     @Autowired
@@ -30,7 +23,7 @@ class RiderController {
     @Autowired
     private RiderService riderService;
 
-    @PostMapping("/v1/riders/register")
+    @PostMapping("/register")
     public ResponseEntity<Rider> registerRider(@RequestBody Rider rider) {
       if (rider.getPassword().length() < 8 || rider.getEmail() == null || rider.getEmail().equals("")
           || rider.getFirstName() == null || rider.getFirstName().equals("")
@@ -42,7 +35,7 @@ class RiderController {
       return new ResponseEntity<>(rider, HttpStatus.CREATED);
     }
     
-    @PostMapping("/v1/riders/login")
+    @PostMapping("/login")
     public ResponseEntity<Rider> createAuthenticationToken(@RequestBody Map<String, String> payload) {
         String email = payload.get("email");
         String password = payload.get("password");
@@ -58,62 +51,62 @@ class RiderController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    @GetMapping("riders/{id}")
+    @GetMapping("/{id}")
 	public Rider getRiderById(@PathVariable(value = "id") long id) {
 		return riderService.getRiderById(id);
 	}
 
-	@DeleteMapping("riders/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteRiderById(@PathVariable(value = "id") long id) {
 		return riderService.deleteRiderById(id);
 	}
 
-    @PutMapping("riders/email/{id}")
+    @PutMapping("/email/{id}")
     public Rider updateRiderEmailById(@PathVariable(value = "id") long id,  @RequestParam String email) {
 		return riderService.updateRiderEmailById(id, email);
 	}
 
-    @PutMapping("riders/firstName/{id}")
+    @PutMapping("/firstName/{id}")
     public Rider updateRiderFirstNameById(@PathVariable(value = "id") long id,  @RequestParam String firstName) {
 		return riderService.updateRiderFirstNameById(id, firstName);
 	}
 
-    @PutMapping("riders/lastName/{id}")
+    @PutMapping("/lastName/{id}")
     public Rider updateRiderLastNameById(@PathVariable(value = "id") long id,  @RequestParam String lastName) {
 		return riderService.updateRiderLastNameById(id, lastName);
 	}
 
-    @PutMapping("riders/password/{id}")
+    @PutMapping("/password/{id}")
     public Rider updateRiderPasswordById(@PathVariable(value = "id") long id,  @RequestParam String password) {
 		return riderService.updateRiderPasswordById(id, password);
 	}
 
-    @PutMapping("riders/phone/{id}")
+    @PutMapping("/phone/{id}")
     public Rider updateRiderPhoneById(@PathVariable(value = "id") long id,  @RequestParam String phone) {
 		return riderService.updateRiderPhoneById(id, phone);
 	}
 
-    @PutMapping("riders/address/{id}")
+    @PutMapping("/address/{id}")
     public Rider updateRiderAddressById(@PathVariable(value = "id") long id,  @RequestParam String address) {
 		return riderService.updateRiderAddressById(id, address);
 	}
 
-    @PutMapping("riders/age/{id}")
+    @PutMapping("/age/{id}")
     public Rider updateRiderAgeById(@PathVariable(value = "id") long id,  @RequestParam int age) {
 		return riderService.updateRiderAgeById(id, age);
 	}
 
-    @PutMapping("riders/nif/{id}")
+    @PutMapping("/nif/{id}")
     public Rider updateRiderNifById(@PathVariable(value = "id") long id,  @RequestParam int nif) {
 		return riderService.updateRiderNifById(id, nif);
 	}
 
-    @PutMapping("riders/vehicleType/{id}")
+    @PutMapping("/vehicleType/{id}")
     public Rider updateRiderVehicleTypeById(@PathVariable(value = "id") long id,  @RequestParam String vehicleType) {
 		return riderService.updateRiderVehicleTypeById(id, vehicleType);
 	}
 
-    @PutMapping("riders/licensePlate/{id}")
+    @PutMapping("/licensePlate/{id}")
     public Rider updateRiderLicensePlateById(@PathVariable(value = "id") long id,  @RequestParam String licensePlate) {
 		return riderService.updateRiderLicensePlateById(id, licensePlate);
 	}
