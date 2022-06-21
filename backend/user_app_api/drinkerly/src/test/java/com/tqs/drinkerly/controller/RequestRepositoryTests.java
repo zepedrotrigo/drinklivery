@@ -42,7 +42,13 @@ import org.junit.jupiter.api.BeforeEach;
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class RequestRepositoryTests {
-
+   private Rider deliverRider = new Rider("firstName", "lastName", "password", "address", 22, 222222222,
+      "987654321", "email", "vehicleType", "licensePlate");
+   private User user = new User("José", "Trigo", "testingpassword123", "Campus de Santiago", 21, 
+      259070137, "938349557", "email1");
+   private Product p = new Product();
+      List<Product> productList = new ArrayList<>();
+      
    @Container
 	public static MySQLContainer<?> mySqlDB = new MySQLContainer<>
 			("mysql:5.7.37")
@@ -66,16 +72,14 @@ public class RequestRepositoryTests {
    @Test
    @Order(1)
    public void saveRequestTest(){
-      Rider deliverRider = new Rider();
-      User user = new User();
-      Product p = new Product();
-      List<Product> productList = new ArrayList<>();
       productList.add(p);
       
-      Request req = new Request(deliverRider, LocalDateTime.now(), user, productList);
+      Request req = new Request(deliverRider, user, productList);
       rRep.save(req);
 
       Assertions.assertThat(req.getId()).isGreaterThan(0);
    }
+
+  
 
 }
