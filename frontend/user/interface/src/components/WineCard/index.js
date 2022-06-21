@@ -66,7 +66,7 @@ const WineCard = (props) => {
 
                 <div className="place-self-end">
                     <button className="text-primary-shade-4 border-2 border-primary-shade-4 rounded-full aspect-square w-[40px] hover:bg-primary-shade-4 hover:text-white active:scale-95" onClick={()=>quantity>1 && setQuantity(quantity-1)}>-</button>
-                    <button className="bg-primary-shade-4 rounded-lg p-3 text-white mx-2 active:scale-95" onClick={()=>addItemToCart(props.wine)}>Add {quantity} to Cart</button>
+                    <button id="addToCartBtn" className="bg-primary-shade-4 rounded-lg p-3 text-white mx-2 active:scale-95" onClick={()=>addItemToCart(props.wine)}>Add {quantity} to Cart</button>
                     <button className="text-primary-shade-4 border-2 border-primary-shade-4 rounded-full aspect-square w-[40px] hover:bg-primary-shade-4 hover:text-white active:scale-95" onClick={()=>setQuantity(quantity+1)}>+</button>
                 </div>
                 {itemAdded && <div id="addedToCart" className={`bg-primary/20 p-4 absolute bottom-4 left-1/2 -translate-x-1/2 rounded-xl ${animation}`}>

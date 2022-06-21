@@ -24,7 +24,7 @@ const NavBar = () => {
                 <NavLink to="/" className={({ isActive }) => { return (isActive ? active : link) }}>
                     Home
                 </NavLink>
-                <NavLink to="/wines" className={({ isActive }) => { return (isActive ? active : link) }}>
+                <NavLink id="winesBtn" to="/wines" className={({ isActive }) => { return (isActive ? active : link) }}>
                     Wines
                 </NavLink>
                 {!isLogged ? 
