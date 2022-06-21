@@ -93,7 +93,7 @@ public class RiderRepositoryTests {
         assertThat(rRep.count()).isGreaterThan(0);
     }
     
-    @Test
+    /*@Test
     @Order(5)
     public void deleteRiders_Test(){
 
@@ -107,6 +107,6 @@ public class RiderRepositoryTests {
         Rider r1 = rRep.findByEmail("josetrigo@ua.pt");
 
         Assertions.assertThat(r1).isNull();
-    }
+    }*/
     
 }
