@@ -10,6 +10,8 @@ const Checkout = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
+  const user = useSelector(state => state.user);
+
   useEffect(() => {
     if (!fetched) {
       let tempPrice = 0;
