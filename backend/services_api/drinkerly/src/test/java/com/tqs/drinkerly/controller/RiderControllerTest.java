@@ -230,7 +230,7 @@ public class RiderControllerTest {
 			Mockito.verify(riderService, VerificationModeFactory.times(1)).getRiderById(1L);
 	}
 
-        /*
+        
         @Test
         void testGetRiderById_existentId() throws Exception {
 
@@ -254,7 +254,7 @@ public class RiderControllerTest {
 
 
         }
-
+        /*
         @Test
 	void testGetRiderById_InexistentId() throws Exception {
 
@@ -266,7 +266,7 @@ public class RiderControllerTest {
 
 
         }
-
+        
         @Test
 	void testDeleteRiderById_existentId() throws Exception {
 

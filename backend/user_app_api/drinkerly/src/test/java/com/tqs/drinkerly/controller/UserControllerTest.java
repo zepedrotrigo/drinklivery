@@ -188,7 +188,7 @@ public class UserControllerTest {
 
         Mockito.verify(userService, VerificationModeFactory.times(1)).getUserByEmail(Mockito.any(String.class));
     }
-    /*
+    
     @Test
 	void testGetUserById_existentId() throws Exception {
 
@@ -210,7 +210,7 @@ public class UserControllerTest {
 
 
     }
-
+    /*
     @Test
 	void testGetUserById_InexistentId() throws Exception {
 
