@@ -29,3 +29,10 @@ export const removeFromCart = (index) =>{
         payload:index
     }
 }
+
+export const setUserInfo = (item) =>{
+    return {
+        type: 'SET_USER_INFO',
+        payload:item,
+    }
+}

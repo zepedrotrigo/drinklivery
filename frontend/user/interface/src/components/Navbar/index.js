@@ -10,7 +10,6 @@ const NavBar = () => {
 
     const active = 'underline underline-offset-2 text-primary text-lg'
     const link = 'hover:underline hover:text-slate-600 underline-offset-2 cursor-pointer text-lg'
-    console.log(isLogged);
     return (
         <div className="pl-[10%] pr-[10%] w-[100%] h-min pb-2 pt-4 flex items-center">
             <div className="w-1/2">

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import sha256 from 'crypto-js/sha256';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { signIn, setUserInfo } from '../../redux/actions'
 
 const Enter = () => {
     const [fnError, setFnError] = useState(false);
@@ -12,56 +16,63 @@ const Enter = () => {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [confirmError, setConfirmError] = useState(false);
+    const [loginError, setLoginError] = useState(false);
+    const [notFoundError, setNotFoundError] = useState(false);
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 
     const verifyRegisterFields = () => {
         const alfa = /[a-zA-Z]/;
 
-
         if (document.getElementById("registerFirstName").value.length === 0) {
             setFnError(true);
-            return;
+            return false;
         }
 
         if (document.getElementById("registerLastName").value.length === 0) {
             setLnError(true);
-            return;
+            return false;
         }
 
         if (Number.parseInt(document.getElementById("registerAge").value) < 18) {
             setAgeError(true);
-            return;
+            return false;
         }
 
         if (document.getElementById("registerAddress").value.length === 0) {
             setAddressError(true);
-            return;
+            return false;
         }
 
-        if (document.getElementById("registerNIF").value.length !== 9 || alfa.test(document.getElementById("registerPhone").value)) {
+        if (document.getElementById("registerNIF").value.length !== 9 || alfa.test(document.getElementById("registerNIF").value)) {
             setNifError(true);
-            return;
+            return false;
         }
 
         if (document.getElementById("registerPhone").value.length < 9 || alfa.test(document.getElementById("registerPhone").value)) {
             setPhoneError(true);
-            return;
+            return false;
         }
-
 
         if (!(document.getElementById("registerEmail").value.split("@")[0].length > 1 && document.getElementById("registerEmail").value.split("@")[1].length > 1
             && document.getElementById("registerEmail").value.split("@")[1].includes("."))) {
             setEmailError(true);
-            return;
+            return false;
         }
+
         if (document.getElementById("registerPassword").value.length < 6) {
             setPasswordError(true);
-            return;
+            return false;
         }
+
         if (document.getElementById("registerPassword").value !== document.getElementById("registerConfirmPassword").value) {
             setConfirmError(true);
+            return false;
         }
+
+        return true;
     }
 
     const clearErrors = () => {
@@ -74,20 +85,57 @@ const Enter = () => {
         setAddressError(false);
         setPhoneError(false);
         setNifError(false);
+        setLoginError(false);
+        setNotFoundError(false);
     }
 
     const registerUser = () => {
         clearErrors();
-        verifyRegisterFields();
+
+        if (verifyRegisterFields()) {
+            const user = {
+                firstName: document.getElementById("registerFirstName").value,
+                lastName: document.getElementById("registerLastName").value,
+                phone: document.getElementById("registerPhone").value,
+                address: document.getElementById("registerAddress").value,
+                age: Number.parseInt(document.getElementById("registerAge").value),
+                nif: Number.parseInt(document.getElementById("registerNIF").value),
+                email: document.getElementById("registerEmail").value,
+                password: sha256(document.getElementById("registerPassword").value).toString()
+            }
+            const options = {
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }
+
+
+            axios.post(`/users/register`, user, options)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(err => {
+                    console.log(err);
+                    alert("Something went wrong!");
+                })
+        }
+
+    }
+
+    const loginUser = () => {
+
+        if (document.getElementById("loginEmail").value.length === 0) {
+            return;
+        }
+
+        if (document.getElementById("loginPassword").value.length === 0) {
+            return;
+        }
+
+        clearErrors();
 
         const user = {
-            firstName: document.getElementById("registerFirstName").value,
-            lastName: document.getElementById("registerLastName").value,
-            phone: document.getElementById("registerPhone").value,
-            address: document.getElementById("registerAddress").value,
-            age: Number.parseInt(document.getElementById("registerAge").value),
-            nif: Number.parseInt(document.getElementById("registerNIF").value),
-            email: document.getElementById("registerEmail").value,
+            email: document.getElementById("loginEmail").value,
             password: sha256(document.getElementById("registerPassword").value).toString(),
         }
 
@@ -96,18 +144,24 @@ const Enter = () => {
                 'content-type': 'application/json'
             }
         }
+        axios.post("/users/login", user, options)
+            .then(results => {
+                if (results.status === 202) {
+                    dispatch(signIn());
+                    dispatch(setUserInfo(results.data));
+                    navigate("/");
+                }
 
-
-        axios.post(`/users/register`, user, options)
-            .then(response => {
-                console.log(response);
             })
             .catch(err => {
                 console.log(err)
+                if (err.response.status === 403) {
+                    setLoginError(true);
+                } else if (err.response.status === 404) {
+                    setNotFoundError(true);
+                }
             })
     }
-
-
 
 
 
@@ -128,8 +182,10 @@ const Enter = () => {
                         <label htmlFor="loginPassword" className="ml-4">Password</label>
                         <input id="loginPassword" className="bg-primary-tint-11 focus:bg-primary-tint-10 py-2 px-3 rounded-full border-[1px] border-primary-tint-9 transition duration-100 ease-linear outline-primary-tint-8" type="password"></input>
                     </div>
+                    {notFoundError && <p className="text-xs pl-4 py-1 text-primary-tint-6">* User not found!</p>}
+                    {loginError && <p className="text-xs pl-4 py-1 text-primary-tint-6">* Invalid credentials!</p>}
                     <div className="flex justify-around mt-16">
-                        <button className="bg-primary-shade-1 text-white py-2 self-center rounded-full px-8">Login</button>
+                        <button className="bg-primary-shade-1 text-white py-2 self-center rounded-full px-8 active:scale-95" onClick={loginUser}>Login</button>
 
 
                     </div>
@@ -169,7 +225,7 @@ const Enter = () => {
 
                     <div className="flex flex-col gap-2 mt-10">
                         <label htmlFor="registerPhone" className="ml-4">Phone</label>
-                        <input id="registerPhone" className="bg-primary-tint-11 focus:bg-primary-tint-10 py-2 px-3 rounded-full border-[1px] border-primary-tint-9 transition duration-100 ease-linear outline-primary-tint-8" type="tel" pattern="[0-9]{9..}"></input>
+                        <input id="registerPhone" className="bg-primary-tint-11 focus:bg-primary-tint-10 py-2 px-3 rounded-full border-[1px] border-primary-tint-9 transition duration-100 ease-linear outline-primary-tint-8" type="tel" pattern="[0-9]{9}"></input>
                         {phoneError && <p className="text-xs pl-4 py-1 text-primary-tint-6">* Please enter a valid phone number</p>}
                     </div>
 
@@ -198,7 +254,7 @@ const Enter = () => {
                     </div>
 
                     <div className="flex justify-around mt-16">
-                        <button className="bg-primary-shade-1 text-white py-2 self-center rounded-full px-8" onClick={registerUser}>Register</button>
+                        <button className="bg-primary-shade-1 text-white py-2 self-center rounded-full px-8 active:scale-95" onClick={registerUser}>Register</button>
 
 
                     </div>
