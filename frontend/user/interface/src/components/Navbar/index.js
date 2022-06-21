@@ -28,7 +28,7 @@ const NavBar = () => {
                     Wines
                 </NavLink>
                 {!isLogged ? 
-                <NavLink to="/enter" className="border-2 py-2 px-4 rounded-lg hover:bg-white hover:text-dark">Enter</NavLink>
+                <NavLink id="enterBtn" to="/enter" className="border-2 py-2 px-4 rounded-lg hover:bg-white hover:text-dark">Enter</NavLink>
                 :
                 <NavLink to="/profile" className={({ isActive }) => { return (isActive ? active : link) }}>
                     Your Profile
