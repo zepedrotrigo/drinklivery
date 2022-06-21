@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.*;
-import org.testcontainers.containers.MySQLContainer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -71,6 +70,7 @@ public class RiderServiceTests {
     
       Rider r = rServ.updateRiderFirstNameById(1L, "Pedro"); 
       //System.out.println("\n\n\n\n\n "+u.toString()+"\n\n\n\n");
+      //
 
       Assertions.assertThat(r.getFirstName()).isEqualTo("Pedro");
       
