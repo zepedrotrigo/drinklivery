@@ -13,4 +13,3 @@ Feature: User adds wine to cart and checks out
         And Has items in the cart
         When User clicks "Add to Cart" button
         Then Cart should have wine item
-    
