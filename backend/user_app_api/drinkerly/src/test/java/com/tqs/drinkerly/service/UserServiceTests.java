@@ -1,4 +1,4 @@
-package com.tqs.drinkerly.controller;
+package com.tqs.drinkerly.service;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
