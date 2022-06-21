@@ -40,7 +40,7 @@ const WineCard = (props) => {
 
     return (
         <div className="rounded-lg bg-dark flex p-8 pr-16 relative">
-            <div className="absolute right-4 top-4 text-xl cursor-pointer" onClick={() => props.closeModal()}><IoClose></IoClose></div>
+            <div id="closeBtn" className="absolute right-4 top-4 text-xl cursor-pointer" onClick={() => props.closeModal()}><IoClose></IoClose></div>
             <div className="flex flex-col">
                 <img className="w-[400px] h-[400px] self-center rounded-lg" src={props.wine.image === undefined ? "https://picsum.photos/400" : props.wine.image} alt=""></img>
                 <p className="mt-8 text-xl text-semibold">Price :<span className="ml-3 text-normal">{props.wine.buyPrice} €</span></p>
