@@ -132,6 +132,7 @@ public class Winery {
             ", address='" + getAddress() + "'" +
             ", phone='" + getPhone() + "'" +
             ", email='" + getEmail() + "'" +
+            ", password='" + getPassword() + "'" +
             ", website='" + getWebsite() + "'" +
             ", products='" + getProducts() + "'" +
             "}";

@@ -37,6 +37,22 @@ public class Product {
     public Product() {
     }
 
+    public Product(String name, String Type, String country, String region, String grapeVariety, String description, double volume, double alcoholicVolume, double buyPrice, double retailPrice, double ratingScore, double numRatings, int stock) {
+        this.name = name;
+        this.Type = Type;
+        this.country = country;
+        this.region = region;
+        this.grapeVariety = grapeVariety;
+        this.description = description;
+        this.volume = volume;
+        this.alcoholicVolume = alcoholicVolume;
+        this.buyPrice = buyPrice;
+        this.retailPrice = retailPrice;
+        this.ratingScore = ratingScore;
+        this.numRatings = numRatings;
+        this.stock = stock;
+    }
+
     public Product(String name, String Type, String country, String region, String grapeVariety, String description, double volume, double alcoholicVolume, double buyPrice, double retailPrice, double ratingScore, double numRatings, int stock, Winery winery) {
         this.name = name;
         this.Type = Type;
