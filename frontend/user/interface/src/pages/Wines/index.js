@@ -48,7 +48,7 @@ const Wines = () => {
                                 <p className="mt-1"><span className="font-semibold mr-2">Alcohol/Volume: </span>{wine.alcoholicVolume}%</p>
                                 <p className="mt-1"><span className="font-semibold mr-2">Price: </span>{wine.buyPrice}€</p>
                                 <p className="mt-1"><span className="font-semibold mr-2">Quantity: </span>{wine.stock} un</p>
-                                <button onClick={() => openModal(wine)} className="bg-primary-shade-4 py-2 px-4 text-white self-center mt-4 rounded-xl active:scale-95">View Details</button>
+                                <button id="detailsBtn" onClick={() => openModal(wine)} className="bg-primary-shade-4 py-2 px-4 text-white self-center mt-4 rounded-xl active:scale-95">View Details</button>
                             </div>
                         )
 
