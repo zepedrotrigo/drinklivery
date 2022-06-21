@@ -2,6 +2,7 @@ package com.tqs.drinkerly.controller;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ class RiderController {
     @Autowired
     private RiderService riderService;
 
+    @GetMapping("/")
+    public List<Rider> getAllRiders() {
+      return riderService.getAllRiders();
+    }
+
     @PostMapping("/register")
     public ResponseEntity<Rider> registerRider(@RequestBody Rider rider) {
       if (rider.getPassword().length() < 8 || rider.getEmail() == null || rider.getEmail().equals("")
@@ -36,7 +42,7 @@ class RiderController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<Rider> createAuthenticationToken(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<Rider> login(@RequestBody Map<String, String> payload) {
         String email = payload.get("email");
         String password = payload.get("password");
         try {
@@ -51,7 +57,7 @@ class RiderController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    @GetMapping("/{id}")
+  @GetMapping("/{id}")
 	public Rider getRiderById(@PathVariable(value = "id") long id) {
 		return riderService.getRiderById(id);
 	}
@@ -107,8 +113,8 @@ class RiderController {
 	}
 
     @PutMapping("/licensePlate/{id}")
-    public Rider updateRiderLicensePlateById(@PathVariable(value = "id") long id,  @RequestParam String licensePlate) {
-		return riderService.updateRiderLicensePlateById(id, licensePlate);
-	}
+    public Rider updateRiderLicensePlateById(@PathVariable(value = "id") long id, @RequestParam String licensePlate) {
+      return riderService.updateRiderLicensePlateById(id, licensePlate);
+    }
 }
  
