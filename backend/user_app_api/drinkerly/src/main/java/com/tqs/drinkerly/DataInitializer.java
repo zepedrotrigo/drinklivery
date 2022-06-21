@@ -1,18 +1,12 @@
 package com.tqs.drinkerly;
 
-import java.sql.SQLException;
-
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import com.tqs.drinkerly.model.Product;
 import com.tqs.drinkerly.model.User;
-import com.tqs.drinkerly.model.Winery;
 import com.tqs.drinkerly.repository.ProductRepository;
 import com.tqs.drinkerly.repository.UserRepository;
 
@@ -31,7 +25,7 @@ public class DataInitializer implements ApplicationRunner {
 
         User u1 = userRepository.findByEmail("user.teste@gmail.com");
         if (u1 == null) {
-            u1 = new User("Utilizador", "Teste", "testingpassword123", "Teste", 21, 259171137, "938341123",
+            u1 = new User("Utilizador", "Teste", "9122378776918b2b7d5e7663c40182c6fda4e5148d8df835d68dba172df27653", "Teste", 21, 259171137, "938341123",
                     "user.teste@gmail.com");
             userRepository.save(u1);
         }

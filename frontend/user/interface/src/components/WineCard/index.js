@@ -40,7 +40,7 @@ const WineCard = (props) => {
 
     return (
         <div className="rounded-lg bg-dark flex p-8 pr-16 relative">
-            <div className="absolute right-4 top-4 text-xl cursor-pointer" onClick={() => props.closeModal()}><IoClose></IoClose></div>
+            <div id="closeBtn" className="absolute right-4 top-4 text-xl cursor-pointer" onClick={() => props.closeModal()}><IoClose></IoClose></div>
             <div className="flex flex-col">
                 <img className="w-[400px] h-[400px] self-center rounded-lg" src={props.wine.image === undefined ? "https://picsum.photos/400" : props.wine.image} alt=""></img>
                 <p className="mt-8 text-xl text-semibold">Price :<span className="ml-3 text-normal">{props.wine.buyPrice} €</span></p>
@@ -53,7 +53,7 @@ const WineCard = (props) => {
             </div>
             <div className="flex flex-col justify-between ml-20 mt-14">
                 <div>
-                    <p className="text-3xl font-bold">Vinho del Puerto <span className="font-normal">,</span> <span className="font-normal ml-4"> 0.75 L</span></p>
+                    <p className="text-3xl font-bold">{props.wine.name} <span className="font-normal">,</span> <span className="font-normal ml-4"> 0.75 L</span></p>
                     <p className="mt-2 text-base text-semibold">From <span className="ml-2">{props.wine.winery}</span></p>
                     <p className="mt-8 text-xl text-semibold">Alcoholic Volume:<span className="ml-2">{props.wine.alcoholicVolume}%</span></p>
                     <p className="mt-2 text-xl text-semibold">Type:<span className="ml-2">{props.wine.type}</span></p>
@@ -66,10 +66,10 @@ const WineCard = (props) => {
 
                 <div className="place-self-end">
                     <button className="text-primary-shade-4 border-2 border-primary-shade-4 rounded-full aspect-square w-[40px] hover:bg-primary-shade-4 hover:text-white active:scale-95" onClick={()=>quantity>1 && setQuantity(quantity-1)}>-</button>
-                    <button className="bg-primary-shade-4 rounded-lg p-3 text-white mx-2 active:scale-95" onClick={()=>addItemToCart(props.wine)}>Add {quantity} to Cart</button>
+                    <button id="addToCartBtn" className="bg-primary-shade-4 rounded-lg p-3 text-white mx-2 active:scale-95" onClick={()=>addItemToCart(props.wine)}>Add {quantity} to Cart</button>
                     <button className="text-primary-shade-4 border-2 border-primary-shade-4 rounded-full aspect-square w-[40px] hover:bg-primary-shade-4 hover:text-white active:scale-95" onClick={()=>setQuantity(quantity+1)}>+</button>
                 </div>
-                {itemAdded && <div id="added_to_cart" className={`bg-primary/20 p-4 absolute bottom-4 left-1/2 -translate-x-1/2 rounded-xl ${animation}`}>
+                {itemAdded && <div id="addedToCart" className={`bg-primary/20 p-4 absolute bottom-4 left-1/2 -translate-x-1/2 rounded-xl ${animation}`}>
                     <p className="">Item added to cart!</p>
                 </div>}
 
