@@ -1,6 +1,7 @@
 package com.tqs.drinkerly.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -58,7 +59,12 @@ class RiderController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    @GetMapping("riders/{id}")
+    @GetMapping("/v1/riders")
+    public List<Rider> getAllRiders() {
+      return riderService.getAllRiders();
+    }
+
+    @GetMapping("/v1/riders/{id}")
 	public Rider getRiderById(@PathVariable(value = "id") long id) {
 		return riderService.getRiderById(id);
 	}
