@@ -16,7 +16,7 @@ import com.tqs.drinkerly.repository.RiderRepository;
 import com.tqs.drinkerly.service.RiderService;
 
 @RestController
-@RequestMapping("/v1/riders/")
+@RequestMapping("/v1/riders")
 class RiderController {
 
     @Autowired
@@ -25,7 +25,7 @@ class RiderController {
     @Autowired
     private RiderService riderService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<Rider> getAllRiders() {
       return riderService.getAllRiders();
     }
