@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import com.google.common.base.Predicates;
@@ -40,6 +41,22 @@ import java.util.logging.Level;
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class RiderRepositoryTests {
+
+    @Container
+	public static MySQLContainer<?> mySqlDB = new MySQLContainer<>
+			("mysql:5.7.37")
+			.withDatabaseName("drinklivery")
+			.withUsername("user")
+			.withPassword("password");
+
+
+	@DynamicPropertySource
+	public static void properties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url",mySqlDB::getJdbcUrl);
+		registry.add("spring.datasource.username", mySqlDB::getUsername);
+		registry.add("spring.datasource.password", mySqlDB::getPassword);
+
+	};
 
     @Autowired
     private RiderRepository rRep;
