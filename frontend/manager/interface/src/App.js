@@ -1,6 +1,5 @@
 import {Routes, Route} from 'react-router-dom'
 
-import Home from './pages/Home'
 import AddRider from './pages/AddRider';
 
 import Navbar from './components/Navbar'
@@ -18,10 +17,9 @@ function App() {
     <>
     <Navbar></Navbar>
     <Routes>
-      <Route path="/" element={<Home/>}></Route>
-      <Route path="/riders" element={<Riders/>}>
+      <Route path="/" element={<Riders/>}>
         <Route
-        path={`:riderId`}
+        path={`rider/:riderId`}
         element={<Rider></Rider>}
         ></Route>
       </Route>
