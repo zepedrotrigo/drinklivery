@@ -136,7 +136,7 @@ const Enter = () => {
 
         const user = {
             email: document.getElementById("loginEmail").value,
-            password: sha256(document.getElementById("registerPassword").value).toString(),
+            password: sha256(document.getElementById("loginPassword").value).toString(),
         }
 
         const options = {
